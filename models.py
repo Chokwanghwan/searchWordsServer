@@ -8,6 +8,37 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/secondTest.db'
 db = SQLAlchemy(app)
 
+"""
+*   ==> 1:M
+**  ==> M:M
+User
+    id
+    email
+
+    *oauth
+    *urls
+    *word_book
+
+WordBook
+    id
+    word_id
+    user_id
+    *urls
+
+Word
+    id
+    english
+    mean
+
+    **urls
+
+Url
+    id
+    link
+
+    **words
+"""
+
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -29,3 +60,19 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % self.account
+
+words = db.Table('words',
+    db.Column('url_id', db.Integer, db.ForeignKey('url.id')),
+    db.Column('word_id', db.Integer, db.ForeignKey('word.id'))
+)
+
+class Url(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    recentUrl = db.Column(db.String(100))
+    words = db.relationship('Word', secondary=words, backref=db.backref('words', lazy='dynamic'))
+
+class WordInfo(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    word = db.Column(db.String(100))
+    mean = db.Column(db.String(100))
+    deleteCheck = db.Column(db.Boolean) # default = N
