@@ -19,17 +19,17 @@ class User(db.Model):
                                 lazy='dynamic')
     urls = db.relationship('Url', secondary=urls,
         backref=db.backref('users', lazy='dynamic'))
-    
-    def __init__(self, email):
-        self.email = email
 
-    @classmethod
-    def fuck_up(cls, email):
-        user = cls.find_by_email(email)
-        if user is None:
-            cls.insert_user(email)
-        inserted_user = cls.find_by_email(email)
-        return inserted_user
+    def __init__(cls, email):
+        cls.email = email
+
+    # @classmethod
+    # def is_there_email(cls, email):
+    #     user = cls.find_by_email(email)
+    #     if user is None:
+    #         cls.insert_user(email)
+    #     inserted_user = cls.find_by_email(email)
+    #     return inserted_user
 
     @classmethod
     def insert_user(cls, email):
@@ -63,9 +63,20 @@ class Word(db.Model):
     english = db.Column(db.String(20))
     mean = db.Column(db.String(20))
 
-    def __init__(self, english, mean):
-        self.english = english
-        self.mean = mean
+    def __init__(cls, english, mean):
+        cls.english = english
+        cls.mean = mean
+
+    @classmethod
+    def insertWord(cls, english, mean):
+        wb = Word(english, mean)
+        db.session.add(wb)
+        db.session.commit()
+
+    @classmethod
+    def find_by_word(cls, english):
+        word = cls.query.filter_by(english=english).first()
+        return word
 
 class ReferUrl(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -78,50 +89,54 @@ class Url(db.Model):
     words = db.relationship('Word', secondary=words,
         backref=db.backref('urls', lazy='dynamic'))
 
-    def __init__(self, link):
-        self.link = link
+    def __init__(cls, link):
+        cls.link = link
 
-#insert english, mean in Word table
-def insertWordData(english, mean):
-
-    wordInfo = Word(english, mean)
-
-    try:
-        db.session.add(wordInfo)
-        # db.session.add(wordBookInput)
-        # db.session.add(urlInput)
+    @classmethod
+    def insertLink(cls, link):
+        l = Url(link)
+        db.session.add(l)
         db.session.commit()
-    except:
-        db.session.rollback()
-    finally:
-        db.session.close()
 
-    # users = Word.query.all()
-    # admin = User.query.filter_by(username='haha').all()
-    # print users
+    @classmethod
+    def find_by_link(cls, link):
+        link = cls.query.filter_by(link=link).first()
+        return link
 
-    print '============================'            
+def searchWord(email, link, word):
+    userCheck = User.find_by_email(email)
+    linkCheck = Url.find_by_link(link)
+    wordCheck = Word.find_by_word(word)
+
+    if userCheck is None:
+        print 'email none'
+        
+        if linkCheck is None and wordCheck is None:
+            print 'hasnot link, hasnot word'
+        elif linkCheck is not None and wordCheck is None:
+            print 'has link, hasnot word'
+        elif linkCheck is None and wordCheck is not None:
+            print 'hasnot link, has word'
+        else:
+            print 'has link, has word'
+    else:
+        print 'has email'
+        
+        if linkCheck is None and wordCheck is None:
+            print 'hasnot link, hasnot word'
+        elif linkCheck is not None and wordCheck is None:
+            print 'has link, hasnot word'
+        elif linkCheck is None and wordCheck is not None:
+            print 'hasnot link, has word'
+        else:
+            print 'has link, has word'
 
 
-#insert account in User table
-def insertUserData(email):
-    print email
-    
-    userInfo = User(email)
 
 
-    try:
-        db.session.add(userInfo)
-        # db.session.add(wordBookInput)
-        # db.session.add(urlInput)
-        db.session.commit()
-    except:
-        db.session.rollback()
-    finally:
-        db.session.close()
 
-    # users = User.query.all()
-    # admin = User.query.filter_by(username='haha').all()
-    # print users
 
-    print '============================'            
+
+
+
+
