@@ -10,6 +10,28 @@ urls = db.Table('urls',
     db.Column('user_id', db.Integer, db.ForeignKey('user.id'))
 )
 
+def renewWords(english, link):
+    linkInfo = Url.find_by_link(link)
+    wordInfo = Word.find_by_word(english)
+
+    linkInfo.words.append(wordInfo)
+    db.session.add(linkInfo)
+    db.session.commit()
+
+    print wordInfo.id
+    print linkInfo.id
+
+def renewUrls(email, link):
+    userInfo = User.find_by_email(email)
+    linkInfo = Url.find_by_link(link)
+
+    userInfo.urls.append(linkInfo)
+    db.session.add(userInfo)
+    db.session.commit()
+
+    print userInfo.id
+    print linkInfo.id
+
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(45))
