@@ -151,7 +151,7 @@ class WordBook(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     word_id = db.Column(db.Integer, db.ForeignKey('word.id'))
-    deleteCheck = db.Column(db.String(2)
+    is_delete = db.Column(db.Boolean, default=False)
     refer_urls = db.relationship('ReferUrl', backref='word_book',
                                 lazy='dynamic')
     
@@ -175,6 +175,15 @@ class WordBook(db.Model):
     def insert_wordbook(cls, user_id, word_id):
         wb = WordBook(user_id, word_id)
         db.session.add(wb)
+        db.session.commit()
+
+    @classmethod
+    def update_wordbook(cls, update_user, update_word):
+        user = User.get(update_user)
+        word = Word.get(update_word)
+
+        find_word_book = WordBook.query.filter_by(user_id=user.id, word_id=word.id).first()
+        find_word_book.is_delete = True
         db.session.commit()
 
     @classmethod
