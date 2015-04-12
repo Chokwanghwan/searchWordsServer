@@ -41,6 +41,7 @@ class User(db.Model):
         if user is None:
             cls.insert_email(email)
         inserted_user = cls.find_by_email(email)
+
         return inserted_user
 
     @classmethod
@@ -151,7 +152,7 @@ class WordBook(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     word_id = db.Column(db.Integer, db.ForeignKey('word.id'))
-    is_delete = db.Column(db.Boolean, default=False)
+    is_deleted = db.Column(db.Boolean, default=False)
     refer_urls = db.relationship('ReferUrl', backref='word_book',
                                 lazy='dynamic')
     
@@ -183,7 +184,7 @@ class WordBook(db.Model):
         word = Word.get(update_word)
 
         find_word_book = WordBook.query.filter_by(user_id=user.id, word_id=word.id).first()
-        find_word_book.is_delete = True
+        find_word_book.is_deleted = True
         db.session.commit()
 
     @classmethod
@@ -214,6 +215,27 @@ def searchWord(email, link, word):
 
         word_book = WordBook.get(user, word)
         word_book.make_relationship_referurl(url)
+
+def select_word_for_web(email, link):
+
+    # user가 있나 없나 체크.
+    user_email = email
+    user_url = link
+
+    user = User.get(user_email)
+    url = Url.get(user_url)
+
+    deleted_word_list = []
+    word_list = []
+    for word in url.words:
+        wb = WordBook.query.filter_by(word_id=word.id, user_id=user.id).first()        
+        if wb.is_deleted:
+            deleted_word_list.append(word)
+        else:
+            word_list.append(word)
+            
+    return (deleted_word_list, word_list)
+
 
 def testData():
     email1 = 'kwanggoo@gmail.com'
