@@ -180,11 +180,16 @@ class WordBook(db.Model):
 
     @classmethod
     def update_wordbook(cls, update_user, update_word):
-        user = User.get(update_user)
-        word = Word.get(update_word)
+        # WordBook.update_wordbook('kwanggoo@gmail.com', {'english':'haha', 'mean':'a'})
+        user_email = update_user
+        user_word = update_word
 
-        find_word_book = WordBook.query.filter_by(user_id=user.id, word_id=word.id).first()
-        find_word_book.is_deleted = True
+        user = User.get(user_email)
+
+        for user_word in user_word:
+            word = Word.get(user_word)
+            find_word_book = WordBook.query.filter_by(user_id=user.id, word_id=word.id).first()
+            find_word_book.is_deleted = True
         db.session.commit()
 
     @classmethod
@@ -197,13 +202,10 @@ class WordBook(db.Model):
 
 def searchWord(email, link, word):
 
-    # user가 있나 없나 체크.
     user_email = email
     user_url = link
-    # user_words = [{'hello':'a'}, {'bye':'b'}]
     user_words = word
 
-    #User.get()은 항상 User를 반환한다. (유저가 있으면 넣고 없으면 생성한후 반환)
     user = User.get(user_email)
     url = Url.get(user_url)
 
@@ -217,8 +219,7 @@ def searchWord(email, link, word):
         word_book.make_relationship_referurl(url)
 
 def select_word_for_web(email, link):
-
-    # user가 있나 없나 체크.
+    # deleted_words, words = selectWord('kwanggoo@gmail.com', 'http://google.com')
     user_email = email
     user_url = link
 
@@ -235,6 +236,24 @@ def select_word_for_web(email, link):
             word_list.append(word)
             
     return (deleted_word_list, word_list)
+
+def select_word_for_mobile(email):
+
+    user_email = email
+
+    user = User.get(user_email)
+
+    wb = WordBook.query.filter_by(user_id=user.id, is_deleted=True).all()
+
+    word_list = []
+    for word in wb:
+        w = Word.query.filter_by(id=word.id).first()
+        print '=========='
+        print w.english
+        print w.mean
+        print '=========='
+        # w = Word.query.filter_by().all()
+
 
 
 def testData():
