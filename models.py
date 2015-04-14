@@ -230,6 +230,9 @@ def select_word_for_web(email, link):
     word_list = []
     for word in url.words:
         wb = WordBook.query.filter_by(word_id=word.id, user_id=user.id).first()        
+        print '=========='
+        print wb.id
+        print '=========='
         if wb.is_deleted:
             deleted_word_list.append(word)
         else:
@@ -243,54 +246,28 @@ def select_word_for_mobile(email):
 
     user = User.get(user_email)
 
-    wb = WordBook.query.filter_by(user_id=user.id, is_deleted=True).all()
-
+    deleted_word_list = []
     word_list = []
-    for word in wb:
-        w = Word.query.filter_by(id=word.id).first()
+    for word in user.word_books:
+        w = Word.query.filter_by(id=user.id).first()
         print '=========='
         print w.english
         print w.mean
         print '=========='
-        # w = Word.query.filter_by().all()
+        if word.is_deleted:
+            deleted_word_list.append(w)
+        else:
+            word_list.append(w)
+    return (deleted_word_list, word_list)
+            
 
 
 
-def testData():
-    email1 = 'kwanggoo@gmail.com'
-    email2 = 'sunghwan@gmail.com'
-    link1 = 'http://google.com'
-    link2 = 'http://naver.com'
-    link3 = 'http://yahoo.com'
-    link4 = 'http://android.com'
-    eng1 = 'haha'
-    eng2 = 'hell'
-    eng3 = 'meet'
-    eng4 = 'yet'
-    mean1 = 'a'
-    mean2 = 'b'
-    mean3 = 'c'
-    mean4 = 'd'
 
-    word1 = {'english':eng1, 'mean':mean1}
-    word2 = {'english':eng2, 'mean':mean2}
-    word3 = {'english':eng3, 'mean':mean3}
-    word4 = {'english':eng4, 'mean':mean4}
-    
-    # case1 = {'email':email1, 'link':link1, 'words':[{'english':eng1, 'mean':mean1}, {'english':eng2, 'mean':mean2}]}
-    # case2 = {'email':email1, 'link':link2, 'english':eng1, 'mean':mean1}
-    # case3 = {'email':email1, 'link':link1, 'english':eng2, 'mean':mean2}
-    # case4 = {'email':email1, 'link':link2, 'english':eng2, 'mean':mean2}
-    # case5 = {'email':email2, 'link':link3, 'english':eng3, 'mean':mean3}
-    # case6 = {'email':email2, 'link':link4, 'english':eng3, 'mean':mean3}
-    # case7 = {'email':email2, 'link':link3, 'english':eng4, 'mean':mean4}
-    # case8 = {'email':email2, 'link':link4, 'english':eng4, 'mean':mean4}
 
-    case1 = {'email':email1, 'link':link1, 'words':[word1, word2]}
-    case2 = {'email':email1, 'link':link2, 'words':[word2, word3]}
-    case3 = {'email':email1, 'link':link1, 'words':[word3, word4]}
-    case4 = {'email':email1, 'link':link2, 'words':[word4, word1]}
-    case5 = {'email':email2, 'link':link3, 'words':[word1, word2]}
-    case6 = {'email':email2, 'link':link4, 'words':[word2, word3]}
-    case7 = {'email':email2, 'link':link3, 'words':[word3, word4]}
-    case8 = {'email':email2, 'link':link4, 'words':[word4, word1]}
+
+
+
+
+
+
