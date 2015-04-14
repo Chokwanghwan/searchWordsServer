@@ -228,16 +228,14 @@ def select_word_for_web(email, link):
 
     deleted_word_list = []
     word_list = []
+
     for word in url.words:
-        wb = WordBook.query.filter_by(word_id=word.id, user_id=user.id).first()        
-        print '=========='
-        print wb.id
-        print '=========='
+        wb = WordBook.query.filter_by(user_id=user.id, word_id=word.id).first()
         if wb.is_deleted:
-            deleted_word_list.append(word)
+            deleted_word_list.append(wb)
         else:
-            word_list.append(word)
-            
+            word_list.append(wb)
+
     return (deleted_word_list, word_list)
 
 def select_word_for_mobile(email):
@@ -250,16 +248,13 @@ def select_word_for_mobile(email):
     word_list = []
     for word in user.word_books:
         w = Word.query.filter_by(id=user.id).first()
-        print '=========='
-        print w.english
-        print w.mean
-        print '=========='
         if word.is_deleted:
             deleted_word_list.append(w)
         else:
             word_list.append(w)
     return (deleted_word_list, word_list)
-            
+
+
 
 
 
