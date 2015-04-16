@@ -12,10 +12,10 @@ def post_for_insert():
 
 	email = request.form['email']
 	url = request.form['url']
-	english = request.form['english']
-	mean = reqUrl.form['mean']
+	word = request.form['word']
+	
 
-	# 여기서 insert함수 호출
+	data = insert_data(email, url, word)
 
 return data
 
@@ -31,7 +31,7 @@ def post_for_select_web():
 	email = request.form['email']	
 	url = request.form['url']
 
-	# 여기서 select_for_web 함수 호출
+	data = select_word_for_web(email, url)
 
 	return data
 
@@ -46,7 +46,7 @@ def post_for_select_mobile():
 
 	email = request.form['email']	
 
-	# 여기서 select_for_mobile 함수 호출
+	data = select_word_for_mobile(email)
 
 	return data	
 
@@ -65,7 +65,7 @@ def handlerUpdateData():
 	email = request.form['email']
 	word = request.form['word']
 
-	# 여기서 update 함수 호출
+	data = WordBook.update_wordbook(email, word)
 
 	return data
 
