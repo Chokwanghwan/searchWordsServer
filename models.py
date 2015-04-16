@@ -200,7 +200,7 @@ class WordBook(db.Model):
         wb = WordBook.find_by_user_word(user, word)
         return wb
 
-def searchWord(email, link, word):
+def insert_data(email, link, word):
 
     user_email = email
     user_url = link
