@@ -1,10 +1,13 @@
 # -*- coding:utf-8 -*-
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
+from sqlalchemy.dialects import postgresql
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db?'
 db = SQLAlchemy(app)
+
+
 
 urls = db.Table('urls',
     db.Column('url_id', db.Integer, db.ForeignKey('url.id')),
@@ -99,9 +102,7 @@ class Word(db.Model):
         cls.mean = mean
 
     @classmethod
-    def get(cls, word):
-        english = word.get('english')
-        mean = word.get('mean')
+    def get(cls, english, mean):
         word = cls.find_by_word(english)
         if word is None:
             cls.insert_word(english, mean)
@@ -179,17 +180,16 @@ class WordBook(db.Model):
         db.session.commit()
 
     @classmethod
-    def update_wordbook(cls, update_user, update_word):
+    def update_wordbook(cls, email, english):
+        print '&*(&*('
+        print english
         # WordBook.update_wordbook('kwanggoo@gmail.com', {'english':'haha', 'mean':'a'})
-        user_email = update_user
-        user_word = update_word
+        user = User.get(email)
 
-        user = User.get(user_email)
-
-        for user_word in user_word:
-            word = Word.get(user_word)
-            find_word_book = WordBook.query.filter_by(user_id=user.id, word_id=word.id).first()
-            find_word_book.is_deleted = True
+        find_english = Word.find_by_word(english)
+        print find_english.id
+        find_word_book = WordBook.query.filter_by(user_id=user.id, word_id=find_english.id).first()
+        find_word_book.is_deleted = True
         db.session.commit()
 
     @classmethod
@@ -200,19 +200,17 @@ class WordBook(db.Model):
         wb = WordBook.find_by_user_word(user, word)
         return wb
 
-def insert_data(email, link, word):
-
-    user_email = email
-    user_url = link
-    user_words = word
-
-    user = User.get(user_email)
-    url = Url.get(user_url)
+def insert_data(email, link, words):
+    user = User.get(email)
+    url = Url.get(link)
 
     user.make_relationship_url(url)
 
-    for user_word in user_words:
-        word = Word.get(user_word)
+    for user_word in words:
+        english = user_word.get('english')
+        mean = user_word.get('mean')
+        mean = ','.join(mean)
+        word = Word.get(english, mean)
         url.make_relationship_word(word)
 
         word_book = WordBook.get(user, word)
