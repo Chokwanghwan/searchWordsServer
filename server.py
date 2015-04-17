@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-
+from flask import request, json
 from models import *
 
 """ 
@@ -8,17 +8,14 @@ email, url과 함께 DB에 넣는 작업을 위한 url이다.
 """
 @app.route('/searchWords/insertData', methods=['POST'])
 def post_for_insert():
-	data = []
+	datas = request.get_json()
+	email = datas[u'email']
+	url = datas[u'url']
+	words = datas[u'words'].values()
 
-	email = request.form['email']
-	url = request.form['url']
-	word = request.form['word']
-	
-
-	data = insert_data(email, url, word)
-
-return data
-
+	insert_data(email, url, words)
+	#err이면 err사유 리턴해주고 제대로 동작했으면 ok나 카운터.
+	return 'hello'
 
 """
 사용자가 chrome extension 	아이콘을 클릭시 서버에 
@@ -27,7 +24,6 @@ email, url을 넘기고 그 정보로 단어를 select해서 web client에 retur
 @app.route('/searchWords/selectDataForWeb', methods=['POST'])
 def post_for_select_web():
 	data = []
-
 	email = request.form['email']	
 	url = request.form['url']
 
@@ -43,12 +39,11 @@ email을 넘기고 그 정보로 단어를 select해서 mobile client에 return 
 @app.route('/searchWords/selectDataForMobile', methods=['POST'])
 def post_for_select_mobile():
 	data = []
-
-	email = request.form['email']	
+	email = request.form['email']
 
 	data = select_word_for_mobile(email)
 
-	return data	
+	return data
 
 
 """
@@ -59,15 +54,32 @@ email, word를 넘기고 그 정보로 단어를 update한다.
 ** 클라이언트 단의 삭제는 클라이언트에서 해결한다.
 """
 @app.route('/searchWords/updateData', methods=['POST'])
-def handlerUpdateData():
-	data = []
+def post_for_update():
+	datas = request.get_json()
+	email = datas[u'email']
+	english = datas[u'english']
 
-	email = request.form['email']
-	word = request.form['word']
+	print '&*('
+	print english
 
-	data = WordBook.update_wordbook(email, word)
+	WordBook.update_wordbook(email, english)
+	#client의 view에서의 삭제는 client에서 처리하므로 return 하지않음.
+	return "haha"
 
-	return data
+
+@app.route('/test/test', methods=['POST'])
+def test():
+	# datas = request.get_json()
+	datas = request.get_json()
+	email = datas['email']
+	url = datas['url']
+	words = datas['words']
+
+	print email
+	print url
+	print words
+	
+	return 'hello'
 
 if __name__ == '__main__':
-	app.run
+	app.run(debug=True)
