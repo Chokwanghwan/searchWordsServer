@@ -17,8 +17,7 @@ def post_for_insert():
 	#err이면 err사유 리턴해주고 제대로 동작했으면 ok나 카운터.
 	return 'insert complete'
 
-"""
-사용자가 chrome extension 	아이콘을 클릭시 서버에 
+"""초을 클릭시 서버에 
 email, url을 넘기고 그 정보로 단어를 select해서 web client에 return한다.
 """
 @app.route('/searchWords/selectDataForWeb', methods=['POST'])
@@ -64,4 +63,4 @@ def post_for_update():
 	return "update complete"
 
 if __name__ == '__main__':
-	app.run(debug=True)
+	app.run(debug=True, host='0.0.0.0')
