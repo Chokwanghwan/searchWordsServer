@@ -15,7 +15,7 @@ def post_for_insert():
 
 	insert_data(email, url, words)
 	#err이면 err사유 리턴해주고 제대로 동작했으면 ok나 카운터.
-	return 'hello'
+	return 'insert complete'
 
 """
 사용자가 chrome extension 	아이콘을 클릭시 서버에 
@@ -23,9 +23,9 @@ email, url을 넘기고 그 정보로 단어를 select해서 web client에 retur
 """
 @app.route('/searchWords/selectDataForWeb', methods=['POST'])
 def post_for_select_web():
-	data = []
-	email = request.form['email']	
-	url = request.form['url']
+	datas = request.get_json()
+	email = datas[u'email']
+	url = datas[u'url']
 
 	data = select_word_for_web(email, url)
 
@@ -39,12 +39,12 @@ email을 넘기고 그 정보로 단어를 select해서 mobile client에 return 
 @app.route('/searchWords/selectDataForMobile', methods=['POST'])
 def post_for_select_mobile():
 	data = []
-	email = request.form['email']
+	datas = request.get_json()
+	email = request.form[u'email']
 
 	data = select_word_for_mobile(email)
 
 	return data
-
 
 """
 web client와 mobile client에서 서버에 
@@ -59,27 +59,9 @@ def post_for_update():
 	email = datas[u'email']
 	english = datas[u'english']
 
-	print '&*('
-	print english
-
 	WordBook.update_wordbook(email, english)
 	#client의 view에서의 삭제는 client에서 처리하므로 return 하지않음.
-	return "haha"
-
-
-@app.route('/test/test', methods=['POST'])
-def test():
-	# datas = request.get_json()
-	datas = request.get_json()
-	email = datas['email']
-	url = datas['url']
-	words = datas['words']
-
-	print email
-	print url
-	print words
-	
-	return 'hello'
+	return "update complete"
 
 if __name__ == '__main__':
 	app.run(debug=True)
