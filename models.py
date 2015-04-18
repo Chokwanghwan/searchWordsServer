@@ -1,10 +1,10 @@
 # -*- coding:utf-8 -*-
-from flask import Flask
+from flask import Flask, json
 from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects import postgresql
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db?'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/searchWords.db?'
 db = SQLAlchemy(app)
 
 
@@ -181,13 +181,10 @@ class WordBook(db.Model):
 
     @classmethod
     def update_wordbook(cls, email, english):
-        print '&*(&*('
-        print english
         # WordBook.update_wordbook('kwanggoo@gmail.com', {'english':'haha', 'mean':'a'})
         user = User.get(email)
 
         find_english = Word.find_by_word(english)
-        print find_english.id
         find_word_book = WordBook.query.filter_by(user_id=user.id, word_id=find_english.id).first()
         find_word_book.is_deleted = True
         db.session.commit()
@@ -217,40 +214,44 @@ def insert_data(email, link, words):
         word_book.make_relationship_referurl(url)
 
 def select_word_for_web(email, link):
-    # deleted_words, words = selectWord('kwanggoo@gmail.com', 'http://google.com')
-    user_email = email
-    user_url = link
-
-    user = User.get(user_email)
-    url = Url.get(user_url)
+    user = User.get(email)
+    url = Url.get(link)
 
     deleted_word_list = []
     word_list = []
 
     for word in url.words:
         wb = WordBook.query.filter_by(user_id=user.id, word_id=word.id).first()
-        if wb.is_deleted:
-            deleted_word_list.append(wb)
-        else:
-            word_list.append(wb)
+        w = Word.query.filter_by(id=wb.word_id).first()
+        english = w.english
+        mean = w.mean.split(',')
 
-    return (deleted_word_list, word_list)
+        words = {'english': english, 'mean': mean}
+        if wb.is_deleted:
+            deleted_word_list.append(words)
+        else:
+            word_list.append(words)
+    
+    word_list = json.dumps(word_list)        
+    return word_list
 
 def select_word_for_mobile(email):
-
-    user_email = email
-
-    user = User.get(user_email)
+    user = User.get(email)
 
     deleted_word_list = []
     word_list = []
     for word in user.word_books:
-        w = Word.query.filter_by(id=user.id).first()
+        w = Word.query.filter_by(id=word.id).first()
+        english = w.english
+        mean = w.mean
+
+        words = {'english': english, 'mean': mean}
         if word.is_deleted:
-            deleted_word_list.append(w)
+            deleted_word_list.append(words)
         else:
-            word_list.append(w)
-    return (deleted_word_list, word_list)
+            word_list.append(words)
+    word_list = json.dumps(word_list)
+    return word_list
 
 
 
