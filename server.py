@@ -39,12 +39,9 @@ def post_for_select_web():
 사용자가 mobile application 접속시 서버에 
 email을 넘기고 그 정보로 단어를 select해서 mobile client에 return 한다.
 """
-@app.route('/searchWords/selectDataForMobile', methods=['POST'])
+@app.route('/searchWords/selectDataForMobile', methods=['GET'])
 def post_for_select_mobile():
-	data = []
-	datas = request.get_json()
-	email = request.form[u'email']
-
+	email = request.args.get('email')
 	data = select_word_for_mobile(email)
 
 	return data
