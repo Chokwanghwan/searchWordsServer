@@ -2,6 +2,10 @@
 from flask import request, json
 from models import *
 
+@app.route('/', methods=['GET'])
+def index():
+	return 'hello SearchWord'
+
 """ 
 web client의 background.js에서 본문추출하고 번역한 데이터를 
 email, url과 함께 DB에 넣는 작업을 위한 url이다.
