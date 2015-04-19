@@ -245,9 +245,7 @@ def select_word_for_mobile(email):
         mean = w.mean
 
         words = {'english': english, 'mean': mean}
-        if word.is_deleted:
-            deleted_word_list.append(words)
-        else:
+        if not word.is_deleted:
             word_list.append(words)
     word_list = json.dumps(word_list)
     return word_list
@@ -264,7 +262,7 @@ def select_delete_word_for_mobile(email):
         words = {'english': english, 'mean': mean}
         if word.is_deleted:
             deleted_word_list.append(words)
-    word_list = json.dumps(word_list)
+    deleted_word_list = json.dumps(word_list)
     return deleted_word_list
 
 
