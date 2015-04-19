@@ -238,7 +238,6 @@ def select_word_for_web(email, link):
 def select_word_for_mobile(email):
     user = User.get(email)
 
-    deleted_word_list = []
     word_list = []
     for word in user.word_books:
         w = Word.query.filter_by(id=word.id).first()
@@ -253,7 +252,20 @@ def select_word_for_mobile(email):
     word_list = json.dumps(word_list)
     return word_list
 
+def select_delete_word_for_mobile(email):
+    user = User.get(email)
 
+    deleted_word_list = []
+    for word in user.word_books:
+        w = Word.query.filter_by(id=word.id).first()
+        english = w.english
+        mean = w.mean
+
+        words = {'english': english, 'mean': mean}
+        if word.is_deleted:
+            deleted_word_list.append(words)
+    word_list = json.dumps(word_list)
+    return deleted_word_list
 
 
 
