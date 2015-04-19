@@ -4,7 +4,7 @@ from models import *
 import os, logging
 
 _basedir = os.path.dirname(os.path.realpath(__file__))
-_logfile = _basidr+'/../searchword.log'
+_logfile = _basedir+'/../searchword.log'
 
 logging.basicConfig(filename=_logfile,level=logging.DEBUG)
 # logging.debug('This message should go to the log file')
