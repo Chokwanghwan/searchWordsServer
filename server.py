@@ -6,7 +6,7 @@ import os, logging
 _basedir = os.path.dirname(os.path.realpath(__file__))
 _logfile = _basedir+'/../searchword.log'
 
-logging.basicConfig(filename=_logfile,level=logging.DEBUG)
+logging.basicConfig(filename="/tmp/searchWords.log",level=logging.DEBUG)
 # logging.debug('This message should go to the log file')
 # logging.info('So should this')
 # logging.warning('And this, too')
