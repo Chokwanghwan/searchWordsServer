@@ -39,7 +39,7 @@ def post_for_select_web():
 email을 넘기고 그 정보로 단어를 select해서 mobile client에 return 한다.
 """
 @app.route('/searchWords/selectDataForMobile', methods=['GET'])
-def post_for_select_mobile():
+def select_word_mobile():
 	email = request.args.get('email')
 	data = select_word_for_mobile(email)
 
@@ -48,8 +48,8 @@ def post_for_select_mobile():
 """
 사용자가 이전에 삭제요청한 데이터를 리턴해주는 메서드
 """
-@app.route('/searchWords/selectDeleteDataForMobile', methods=['GET'])
-def post_for_select_mobile():
+@app.route('/searchWords/selectDeletedDataForMobile', methods=['GET'])
+def select_deleted_word_mobile():
 	email = request.args.get('email')
 	data = select_delete_word_for_mobile(email)
 
