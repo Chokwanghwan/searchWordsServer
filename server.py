@@ -34,7 +34,6 @@ def post_for_select_web():
 
 	return data
 
-
 """
 사용자가 mobile application 접속시 서버에 
 email을 넘기고 그 정보로 단어를 select해서 mobile client에 return 한다.
@@ -45,6 +44,17 @@ def post_for_select_mobile():
 	data = select_word_for_mobile(email)
 
 	return data
+
+"""
+사용자가 이전에 삭제요청한 데이터를 리턴해주는 메서드
+"""
+@app.route('/searchWords/selectDeleteDataForMobile', methods=['GET'])
+def post_for_select_mobile():
+	email = request.args.get('email')
+	data = select_word_for_mobile(email)
+
+	return data
+
 
 """
 web client와 mobile client에서 서버에 
