@@ -22,7 +22,6 @@ words = db.Table('words',
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(45))
-    # password = db.Column(db.String(32))
 
     word_books = db.relationship('WordBook', backref='user',
                                 lazy='dynamic')
@@ -181,7 +180,6 @@ class WordBook(db.Model):
 
     @classmethod
     def update_wordbook(cls, email, english):
-        # WordBook.update_wordbook('kwanggoo@gmail.com', {'english':'haha', 'mean':'a'})
         user = User.get(email)
 
         find_english = Word.find_by_word(english)
