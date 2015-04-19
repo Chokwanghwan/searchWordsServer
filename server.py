@@ -1,6 +1,15 @@
 # -*- coding:utf-8 -*-
 from flask import request, json
 from models import *
+import os, logging
+
+_basedir = os.path.dirname(os.path.realpath(__file__))
+_logfile = _basidr+'/../searchword.log'
+
+logging.basicConfig(filename=_logfile,level=logging.DEBUG)
+# logging.debug('This message should go to the log file')
+# logging.info('So should this')
+# logging.warning('And this, too')
 
 @app.route('/', methods=['GET'])
 def index():
@@ -67,7 +76,7 @@ email, word를 넘기고 그 정보로 단어를 update한다.
 def post_for_update():
 	email = request.values.get('email')
 	english = request.values.get('english')
-
+	logging.debug('updateData email is %s, english is %s'%(email, english))
 	WordBook.update_wordbook(email, english)
 	#client의 view에서의 삭제는 client에서 처리하므로 return 하지않음.
 	return "update complete"
