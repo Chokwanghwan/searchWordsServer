@@ -51,7 +51,7 @@ def post_for_select_mobile():
 @app.route('/searchWords/selectDeleteDataForMobile', methods=['GET'])
 def post_for_select_mobile():
 	email = request.args.get('email')
-	data = select_word_for_mobile(email)
+	data = select_delete_word_for_mobile(email)
 
 	return data
 
