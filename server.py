@@ -35,12 +35,12 @@ email, url을 넘기고 그 정보로 단어를 select해서 web client에 retur
 """
 @app.route('/searchWords/selectDataForWeb', methods=['POST'])
 def post_for_select_web():
-	# datas = request.get_json()
-	# email = datas[u'email']
-	# url = datas[u'url']
+	datas = request.get_json()
+	email = datas[u'email']
+	url = datas[u'url']
 
-	email = request.values.get('email')
-	url = request.values.get('url')
+	# email = request.values.get('email')
+	# url = request.values.get('url')
 
 	data = select_word_for_web(email, url)
 
