@@ -39,8 +39,8 @@ def post_for_select_web():
 	# email = datas[u'email']
 	# url = datas[u'url']
 
-	email = request.values('email')
-	url = request.values('url')
+	email = request.values.get('email')
+	url = request.values.get('url')
 
 	data = select_word_for_web(email, url)
 
