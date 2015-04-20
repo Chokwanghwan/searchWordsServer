@@ -1,7 +1,23 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 from models import *
-db.create_all()
+import os, logging
+
+email = 'kwanggoo@gmail.com'
+english = 'hello'
+
+logging.basicConfig(filename="/tmp/searchWords.log",level=logging.DEBUG)
+logging.debug('updateData email is %s, english is %s'%(email, english))
+logging.info('So should this')
+logging.warning('And this, too')
+
+
+
+
+# db.create_all()
+
+
+
 #계정 없을때 케이스.
 insert_data('kwanggoo@gmail.com', 'http://google.com', [{'english':'ghaha', 'mean':{'a', 'yt'}}, 
 													   {'english':'ghello1','mean':{'a', 'yt'}}, 
