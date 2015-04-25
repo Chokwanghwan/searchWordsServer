@@ -84,5 +84,12 @@ def post_for_update():
 	#client의 view에서의 삭제는 client에서 처리하므로 return 하지않음.
 	return "update complete"
 
+@app.route('/userInfo', methods=['GET'])
+def get_for_userInfo():
+	email = request.args.get('email')
+
+	data = find_user_info(email);
+	return data
+
 if __name__ == '__main__':
 	app.run(debug=True, host='0.0.0.0')
