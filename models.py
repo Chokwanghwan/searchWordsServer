@@ -260,7 +260,7 @@ def select_delete_word_for_mobile(email):
         words = {'english': english, 'mean': mean}
         if word.is_deleted:
             deleted_word_list.append(words)
-    deleted_word_list = json.dumps(word_list)
+    deleted_word_list = json.dumps(deleted_word_list)
     return deleted_word_list
 
 def find_user_info(email):
