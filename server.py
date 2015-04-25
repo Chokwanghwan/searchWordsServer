@@ -80,8 +80,7 @@ def post_for_update():
 	email = request.values.get('email')
 	english = request.values.get('english')
 	is_deleted = request.values.get('is_deleted')
-	# x if a>b else y
-	is_deleted = Ture if (is_deleted=="true") else False
+	is_deleted = True if (is_deleted=="true") else False
 	WordBook.update_wordbook(email, english, is_deleted)
 
 	logging.debug('updateData email is %s, english is %s'%(email, english))
