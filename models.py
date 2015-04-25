@@ -185,16 +185,8 @@ class WordBook(db.Model):
         find_english = Word.find_by_word(english)
         find_word_book = WordBook.query.filter_by(user_id=user.id, word_id=find_english.id).first()
 
-        if (is_deleted == "true") {
-            find_word_book.is_deleted = True
-            db.session.commit()
-        } else if (is_deleted == "false") {
-            find_word_book.is_deleted = False
-            db.session.commit()
-        } else {
-            #고려되지 않은 경우
-            return
-        }
+        find_word_book.is_deleted = is_deleted
+        db.session.commit()
 
     @classmethod
     def get(cls, user, word):
