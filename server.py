@@ -89,7 +89,7 @@ def get_for_userInfo():
 	email = request.args.get('email')
 	data = find_user_info(email);
 
-	return "helloworld"
+	return data
 
 if __name__ == '__main__':
 	app.run(debug=True, host='0.0.0.0')
