@@ -263,6 +263,15 @@ def select_delete_word_for_mobile(email):
     deleted_word_list = json.dumps(word_list)
     return deleted_word_list
 
+def find_user_info(email):
+    user = User.get(email)
+
+    all_word_count = len(user.word_books.all())
+    deleted_word_count = len(user.word_books.filter_by(is_deleted=True).all())
+    url_count = len(user.urls)
+    
+
+
 
 
 
