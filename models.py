@@ -271,8 +271,7 @@ def find_user_info(email):
     url_count = len(user.urls)
 
     count = {'all_word_count': all_word_count, 'deleted_word_count': deleted_word_count, 'url_count': url_count}
-
-    return count
+    return json.dumps(count)
     
 
 
