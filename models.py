@@ -269,6 +269,10 @@ def find_user_info(email):
     all_word_count = len(user.word_books.all())
     deleted_word_count = len(user.word_books.filter_by(is_deleted=True).all())
     url_count = len(user.urls)
+
+    count = {'all_word_count': all_word_count, 'deleted_word_count': deleted_word_count, 'url_count': url_count}
+
+    return count
     
 
 
