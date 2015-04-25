@@ -87,9 +87,9 @@ def post_for_update():
 @app.route('/userInfo', methods=['GET'])
 def get_for_userInfo():
 	email = request.args.get('email')
-
 	data = find_user_info(email);
-	return data
+
+	return "helloworld"
 
 if __name__ == '__main__':
 	app.run(debug=True, host='0.0.0.0')
