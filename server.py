@@ -79,8 +79,9 @@ email, word를 넘기고 그 정보로 단어를 update한다.
 def post_for_update():
 	email = request.values.get('email')
 	english = request.values.get('english')
+	is_deleted = request.values.get('is_deleted')
 	logging.debug('updateData email is %s, english is %s'%(email, english))
-	WordBook.update_wordbook(email, english)
+	WordBook.update_wordbook(email, english, is_deleted)
 	#client의 view에서의 삭제는 client에서 처리하므로 return 하지않음.
 	return "update complete"
 
