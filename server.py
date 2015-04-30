@@ -31,12 +31,10 @@ def post_for_insert():
 	#err이면 err사유 리턴해주고 제대로 동작했으면 ok나 카운터.
 	return 'insert complete'
 
-@app.route('/searchWords/insertDataForMobile', methods=['GET'])
+@app.route('/searchWords/insertDataForMobile', methods=['POST'])
 def post_for_insert_for_mobile():
 	# email = request.values.get('email')
 	# url = request.values.get('url')
-	email = request.args.get('email')
-	url = request.args.get('url')
 	
 	page_source = htmlParsing(url)
 	data = extractContent(page_source)
