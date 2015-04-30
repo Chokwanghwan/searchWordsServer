@@ -2,6 +2,7 @@
 from flask import request, json
 from models import *
 import os, logging
+from module import *
 
 _basedir = os.path.dirname(os.path.realpath(__file__))
 _logfile = _basedir+'/../searchword.log'
@@ -29,6 +30,21 @@ def post_for_insert():
 	insert_data(email, url, words)
 	#err이면 err사유 리턴해주고 제대로 동작했으면 ok나 카운터.
 	return 'insert complete'
+
+@app.route('/searchWords/insertDataForMobile', methods=['POST'])
+def post_for_insert_for_mobile():
+	datas = request.get_json()
+	email = datas[u'email']
+	url = datas[u'url']
+	
+	page_source = htmlParsing(url)
+	data = extractContent(page_source)
+	wordDict = translateWords(data)
+	words = wordDict.values()
+
+	insert_data(email, url, words)
+	return 'OK'
+
 
 """초을 클릭시 서버에 
 email, url을 넘기고 그 정보로 단어를 select해서 web client에 return한다.
@@ -95,4 +111,4 @@ def get_for_userInfo():
 	return data
 
 if __name__ == '__main__':
-	app.run(debug=True, host='0.0.0.0')
+	app.run(debug=True, host='0.0.0.0', threaded=True)
