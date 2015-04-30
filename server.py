@@ -34,7 +34,7 @@ def post_for_insert():
 @app.route('/searchWords/insertDataForMobile', methods=['POST'])
 def post_for_insert_for_mobile():
 	email = request.values.get('email')
-	english = request.values.get('english')
+	url = request.values.get('url')
 	
 	page_source = htmlParsing(url)
 	data = extractContent(page_source)
