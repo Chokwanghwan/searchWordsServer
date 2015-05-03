@@ -35,8 +35,6 @@ def post_for_insert():
 def post_for_insert_for_mobile():
 	email = request.values.get('email')
 	url = request.values.get('url')
-	email = request.args.get('email')
-	url = request.args.get('url')
 	
 	page_source = htmlParsing(url)
 	data = extractContent(page_source)
