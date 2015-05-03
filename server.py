@@ -41,9 +41,10 @@ def post_for_insert_for_mobile():
 	page_source = htmlParsing(url)
 	data = extractContent(page_source)
 	words = translateWords(data)
+	testData = wrods[0].english
 	
 	# insert_data(email, url, words)
-	return url
+	return testData
 
 
 """초을 클릭시 서버에 
