@@ -40,7 +40,7 @@ def extractContent(page_source):
 def translateWords(data):
 	# keyCount = 0
 	# a = ['hello', 'bye', 'fuck', 'home', 'hoho', 'bye', 'bye', '123123', '안녕하세요']
-	wordDict = {}
+	wordDict = []
 	for i in data:
 		url = "http://tooltip.dic.naver.com/tooltip.nhn?wordString="+i+"&languageCode=4&nlp=false";
 		request = requests.get(url)
@@ -54,7 +54,7 @@ def translateWords(data):
 			# print english
 			# print mean
 			if (not english in wordDict):
-				wordDict[english] = {'english': english, 'mean': mean}
+				wordDict.append({'english': english, 'mean': mean})
 		# if keyCount == len(a):
 		# 	print 'complete'
 	return wordDict

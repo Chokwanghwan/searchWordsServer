@@ -38,9 +38,8 @@ def post_for_insert_for_mobile():
 	
 	page_source = htmlParsing(url)
 	data = extractContent(page_source)
-	wordDict = translateWords(data)
-	words = wordDict.values()
-
+	words = translateWords(data)
+	
 	insert_data(email, url, words)
 	return 'OK'
 
