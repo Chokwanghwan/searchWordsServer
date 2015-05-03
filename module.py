@@ -1,5 +1,4 @@
 # -*- coding:utf-8 -*-
-from models import *
 import urllib2
 import re
 import json
@@ -33,8 +32,8 @@ def extractContent(page_source):
 	data = re.sub(r'[\d]', '', data)
 	data = re.sub(r'\b\w\b', '', data)
 	p = re.compile(r'<.*?>')
-	p.sub('', data)	
-	data = p.split(' ')
+	data = p.sub('', data)	
+	data = data.split(' ')	
 	return data
 
 def translateWords(data):
@@ -53,7 +52,7 @@ def translateWords(data):
 			mean = result['mean']
 			# print english
 			# print mean
-			if (not english in wordDict):
+			if (not english in wordList):
 				wordList.append({'english': english, 'mean': mean})
 		# if keyCount == len(a):
 		# 	print 'complete'
