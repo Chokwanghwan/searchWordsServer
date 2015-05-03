@@ -16,7 +16,7 @@ import requests
 #1
 #https << handshake Fail 에러 발생
 def htmlParsing(url):
-	response = urllib2.urlopen("http://developer.android.com/develop/index.html")
+	response = urllib2.urlopen(url)
 	page_source = response.read()
 	return page_source
 
