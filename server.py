@@ -43,9 +43,7 @@ def post_for_insert_for_mobile():
 	words = translateWords(data)
 	
 	# insert_data(email, url, words)
-	testData = {"email*": email, "url*":url, "words*": words}
-
-	return testData
+	return url
 
 
 """초을 클릭시 서버에 
