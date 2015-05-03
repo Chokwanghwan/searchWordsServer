@@ -31,17 +31,21 @@ def post_for_insert():
 	#err이면 err사유 리턴해주고 제대로 동작했으면 ok나 카운터.
 	return 'insert complete'
 
-@app.route('/searchWords/insertDataForMobile', methods=['POST'])
+@app.route('/searchWords/insertDataForMobile', methods=['GET'])
 def post_for_insert_for_mobile():
-	email = request.values.get('email')
-	url = request.values.get('url')
+	# email = request.values.get('email')
+	# url = request.values.get('url')
+	email = request.args.get('email')
+	url = request.args.get('url')
 	
 	page_source = htmlParsing(url)
 	data = extractContent(page_source)
 	words = translateWords(data)
 	
-	insert_data(email, url, words)
-	return 'OK'
+	# insert_data(email, url, words)
+	testData = {"email*": email, "url*":url, "words*": words}
+
+	return testData
 
 
 """초을 클릭시 서버에 
