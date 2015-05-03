@@ -33,8 +33,8 @@ def post_for_insert():
 
 @app.route('/searchWords/insertDataForMobile', methods=['POST'])
 def post_for_insert_for_mobile():
-	# email = request.values.get('email')
-	# url = request.values.get('url')
+	email = request.values.get('email')
+	url = request.values.get('url')
 	email = request.args.get('email')
 	url = request.args.get('url')
 	
