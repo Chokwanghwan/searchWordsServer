@@ -41,7 +41,7 @@ def post_for_insert_for_mobile():
 	page_source = htmlParsing(url)
 	data = extractContent(page_source)
 	words = translateWords(data)
-	testData = wrods[0].english
+	testData = words[0].english
 	
 	# insert_data(email, url, words)
 	return testData
