@@ -4,10 +4,10 @@ from models import *
 import os, logging
 from module import *
 
-_basedir = os.path.dirname(os.path.realpath(__file__))
-_logfile = _basedir+'/../searchword.log'
+# _basedir = os.path.dirname(os.path.realpath(__file__))
+# _logfile = _basedir+'/../searchword.log'
 
-logging.basicConfig(filename='/tmp/searchWords.log',level=logging.DEBUG)
+# logging.basicConfig(filename='/tmp/searchWords.log',level=logging.DEBUG)
 # logging.debug('This message should go to the log file')
 # logging.info('So should this')
 # logging.warning('And this, too')
@@ -97,7 +97,7 @@ def post_for_update():
 	is_deleted = True if (is_deleted=="true") else False
 	WordBook.update_wordbook(email, english, is_deleted)
 
-	logging.debug('updateData email is %s, english is %s'%(email, english))
+	# logging.debug('updateData email is %s, english is %s'%(email, english))
 	#client의 view에서의 삭제는 client에서 처리하므로 return 하지않음.
 	return "update complete"
 
