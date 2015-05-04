@@ -56,4 +56,4 @@ def translateWords(data):
 				wordList.append({'english': english, 'mean': mean})
 		# if keyCount == len(a):
 		# 	print 'complete'
-	return wordList
+	return json.dumps(wordList)
