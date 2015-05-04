@@ -103,7 +103,7 @@ def post_for_update():
 
 @app.route('/userInfo', methods=['GET'])
 def get_for_userInfo():
-	email = request.args.get('email')
+	email = request.query_string
 	data = find_user_info(email);
 
 	return data
