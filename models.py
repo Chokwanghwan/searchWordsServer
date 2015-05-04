@@ -205,6 +205,9 @@ def dbException():
         failed=True
 
 def insert_data(email, link, words):
+    app.logger.info(email)
+    app.logger.info(link)
+    app.logger.info(len(words))
     user = User.get(email)
     url = Url.get(link)
 

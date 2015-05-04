@@ -4,6 +4,8 @@ from models import *
 import os, logging
 from module import *
 
+from logging.handlers import RotatingFileHandler
+
 # _basedir = os.path.dirname(os.path.realpath(__file__))
 # _logfile = _basedir+'/../searchword.log'
 
@@ -23,6 +25,7 @@ email, url과 함께 DB에 넣는 작업을 위한 url이다.
 @app.route('/searchWords/insertData', methods=['POST'])
 def post_for_insert():
 	datas = request.get_json()
+	app.logger.info(datas)
 	email = datas[u'email']
 	url = datas[u'url']
 	words = datas[u'words'].values()
@@ -107,4 +110,6 @@ def get_for_userInfo():
 	return data
 
 if __name__ == '__main__':
+	handler = RotatingFileHandler('myWord.log', maxBytes=10000, backupCount=1)
+	app.logger.addHandler(handler)
 	app.run(debug=True, host='0.0.0.0', threaded=True)
