@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
 from flask import Flask, json
 from flask.ext.sqlalchemy import SQLAlchemy
-from sqlalchemy.dialects import postgresql
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/searchWords.db'
@@ -93,8 +92,8 @@ class Url(db.Model):
 
 class Word(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    english = db.Column(db.String(20))
-    mean = db.Column(db.String(20))
+    english = db.Column(db.String(30))
+    mean = db.Column(db.String(150))
 
     def __init__(cls, english, mean):
         cls.english = english
