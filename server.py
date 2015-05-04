@@ -33,14 +33,14 @@ def post_for_insert():
 
 @app.route('/searchWords/insertDataForMobile', methods=['POST'])
 def post_for_insert_for_mobile():
-	email = request.values.get('email')
-	url = request.values.get('url')
+	email = request.form.get('email')
+	url = request.form.get('url')
 	
 	page_source = htmlParsing(url)
 	data = extractContent(page_source)
 	words = translateWords(data)
 	
-	insert_data(email, 'http://developer.android.com/index.html', words)
+	insert_data(email, url, words)
 	return 'OK'
 
 
