@@ -4,7 +4,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from sqlalchemy.dialects import postgresql
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/searchWords.db?'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/searchWords.db'
 db = SQLAlchemy(app)
 
 
