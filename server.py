@@ -55,9 +55,7 @@ def post_for_select_web():
 
 	# email = request.values.get('email')
 	# url = request.values.get('url')
-
 	data = select_word_for_web(email, url)
-
 	return data
 
 """
@@ -103,7 +101,7 @@ def post_for_update():
 
 @app.route('/userInfo', methods=['GET'])
 def get_for_userInfo():
-	email = request.query_string
+	email = request.args.get('email')
 	data = find_user_info(email);
 
 	return data
