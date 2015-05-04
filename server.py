@@ -25,7 +25,7 @@ email, url과 함께 DB에 넣는 작업을 위한 url이다.
 @app.route('/searchWords/insertData', methods=['POST'])
 def post_for_insert():
 	datas = request.get_json()
-	app.logger.info(datas)
+	# app.logger.info(datas)
 	email = datas[u'email']
 	url = datas[u'url']
 	words = datas[u'words'].values()
@@ -42,6 +42,7 @@ def post_for_insert_for_mobile():
 	page_source = htmlParsing(url)
 	data = extractContent(page_source)
 	words = translateWords(data)
+	app.logger.info(words)
 	
 	insert_data(email, url, words)
 	return 'OK'
