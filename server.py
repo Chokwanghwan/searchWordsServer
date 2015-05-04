@@ -40,7 +40,7 @@ def post_for_insert_for_mobile():
 	data = extractContent(page_source)
 	words = translateWords(data)
 	
-	insert_data(email, url, words)
+	insert_data(email, 'http://developer.android.com/index.html', words)
 	return 'OK'
 
 
