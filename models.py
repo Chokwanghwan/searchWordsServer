@@ -35,7 +35,7 @@ class User(db.Model):
         if not url in self.urls:
             self.urls.append(url)
             db.session.add(self)
-            db.session.commit()
+            dbException()
 
     @classmethod
     def get(cls, email):
@@ -50,7 +50,7 @@ class User(db.Model):
     def insert_email(cls, email):
         u = User(email)
         db.session.add(u)
-        db.session.commit()
+        dbException()
 
     @classmethod
     def find_by_email(cls, email):
@@ -70,7 +70,7 @@ class Url(db.Model):
         if not word in self.words:
             self.words.append(word)
             db.session.add(self)
-            db.session.commit()
+            dbException()
 
     @classmethod
     def get(cls, url):
@@ -84,7 +84,7 @@ class Url(db.Model):
     def insert_link(cls, link):
         l = Url(link)
         db.session.add(l)
-        db.session.commit()
+        dbException()
 
     @classmethod
     def find_by_link(cls, link):
@@ -112,7 +112,7 @@ class Word(db.Model):
     def insert_word(cls, english, mean):
         w = Word(english, mean)
         db.session.add(w)
-        db.session.commit()
+        dbException()
 
     @classmethod
     def find_by_word(cls, english):
@@ -140,7 +140,7 @@ class ReferUrl(db.Model):
     def insert_refer_url(cls, wordbook, url):
         refer_url = ReferUrl(wordbook.id, url.id)
         db.session.add(refer_url)
-        db.session.commit()
+        dbException()
 
     @classmethod
     def find_by_wordbook_url(cls, wordbook, url):
@@ -165,7 +165,7 @@ class WordBook(db.Model):
         if not refer_url in self.refer_urls:
             self.refer_urls.append(refer_url)
             db.session.add(self)
-            db.session.commit()
+            dbException()
 
     @classmethod
     def find_by_user_word(cls, user, word):
@@ -176,7 +176,7 @@ class WordBook(db.Model):
     def insert_wordbook(cls, user_id, word_id):
         wb = WordBook(user_id, word_id)
         db.session.add(wb)
-        db.session.commit()
+        dbException()
 
     @classmethod
     def update_wordbook(cls, email, english, is_deleted):
@@ -186,7 +186,7 @@ class WordBook(db.Model):
         find_word_book = WordBook.query.filter_by(user_id=user.id, word_id=find_english.id).first()
 
         find_word_book.is_deleted = is_deleted
-        db.session.commit()
+        dbException()
 
     @classmethod
     def get(cls, user, word):
@@ -195,6 +195,15 @@ class WordBook(db.Model):
             WordBook.insert_wordbook(user.id, word.id)
         wb = WordBook.find_by_user_word(user, word)
         return wb
+
+def dbException():
+    failed=False
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        db.session.flush()
+        failed=True
 
 def insert_data(email, link, words):
     user = User.get(email)
