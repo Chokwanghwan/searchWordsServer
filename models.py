@@ -236,12 +236,11 @@ def select_word_for_web(email, link):
         english = w.english
         mean = w.mean.split(',')
 
-        words = {'english': english, 'mean': mean}
+        words = {'english': english, 'mean': mean, 'urls':len(wb.refer_urls.all())}
         if wb.is_deleted:
             deleted_word_list.append(words)
         else:
             word_list.append(words)
-    
     word_list = json.dumps(word_list)        
     return word_list
 
