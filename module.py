@@ -102,15 +102,6 @@ def partition(alist,first,last):
    return rightmark
 
 
-def dbException():
-	failed=False
-	try:
-	    db.session.commit()
-	except Exception as e:
-	    db.session.rollback()
-	    db.session.flush()
-	    failed=True
-
 def insert_data(email, link, words):
     app.logger.info(email)
     app.logger.info(link)
@@ -164,7 +155,7 @@ def select_word_for_mobile(email):
         words = {'english': english, 'mean': mean, 'urls':len(wb.refer_urls.all())}
         if not word.is_deleted:
             word_list.append(words)
-    quickSort(word_list)        
+    quickSort(word_list)
     word_list = json.dumps(word_list)
     return word_list
 

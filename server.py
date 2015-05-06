@@ -1,7 +1,6 @@
 # -*- coding:utf-8 -*-
 from flask import request, json
 import os, logging
-from models import *
 from module import *
 
 

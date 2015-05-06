@@ -195,7 +195,14 @@ class WordBook(db.Model):
         wb = WordBook.find_by_user_word(user, word)
         return wb
 
-
+def dbException():
+    failed=False
+    try:
+        db.session.commit()
+    except Exception as e:
+        db.session.rollback()
+        db.session.flush()
+        failed=True
     
 
 
