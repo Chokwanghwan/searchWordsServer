@@ -3,6 +3,7 @@ import urllib2
 import re
 import json
 import requests
+from models import *
 
 """
 1. html 소스 추출 후 공백 제거

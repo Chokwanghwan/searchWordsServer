@@ -1,8 +1,9 @@
 # -*- coding:utf-8 -*-
 from flask import request, json
-from models import *
 import os, logging
+from models import *
 from module import *
+
 
 from logging.handlers import RotatingFileHandler
 
@@ -60,6 +61,7 @@ def post_for_select_web():
 	# email = request.values.get('email')
 	# url = request.values.get('url')
 	data = select_word_for_web(email, url)
+
 	return data
 
 """
