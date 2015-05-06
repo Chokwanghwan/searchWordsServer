@@ -152,7 +152,7 @@ def select_word_for_mobile(email):
         english = w.english
         mean = w.mean
 
-        words = {'english': english, 'mean': mean, 'urls':len(wb.refer_urls.all())}
+        words = {'english': english, 'mean': mean, 'urls':len(word.refer_urls.all())}
         if not word.is_deleted:
             word_list.append(words)
     quickSort(word_list)
@@ -168,9 +168,10 @@ def select_delete_word_for_mobile(email):
         english = w.english
         mean = w.mean
 
-        words = {'english': english, 'mean': mean}
+        words = {'english': english, 'mean': mean, 'urls':len(word.refer_urls.all())}
         if word.is_deleted:
             deleted_word_list.append(words)
+    quickSort(deleted_word_list)
     deleted_word_list = json.dumps(deleted_word_list)
     return deleted_word_list
 
