@@ -85,13 +85,13 @@ def partition(alist,first,last):
 	while not done:
 
 		while leftmark <= rightmark and alist[leftmark].get('urls') >= pivotvalue:
-		   leftmark = leftmark + 1
+			leftmark = leftmark + 1
 
 		while alist[rightmark].get('urls') <= pivotvalue and rightmark >= leftmark:
-		   rightmark = rightmark -1
+			rightmark = rightmark -1
 
 		if rightmark < leftmark:
-           done = True
+        	done = True
 		else:
 			temp = alist[leftmark]
 			alist[leftmark] = alist[rightmark]
