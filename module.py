@@ -61,10 +61,11 @@ def translateWords(data):
 		# if keyCount == len(a):
 		# 	print 'complete'
 	return wordList
-
+	
 #quick Sort
 def quickSort(alist):
-	sys.setrecursionlimit(len(alist)+3)
+	maximum = 2*(len(alist)+1)
+	sys.setrecursionlimit(maximum)
 	quickSortHelper(alist,0,len(alist)-1)
 
 def quickSortHelper(alist,first,last):
@@ -102,6 +103,7 @@ def partition(alist,first,last):
 
 
 	return rightmark
+quickSort(data)
 
 def insert_data(email, link, words):
 	app.logger.info(email)
