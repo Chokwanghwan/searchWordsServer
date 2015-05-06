@@ -70,11 +70,10 @@ def quickSortHelper(alist,first,last):
 	app.logger.info(len(alist)+1)
 	sys.setrecursionlimit(len(alist)+1)
 	if first<last:
+		splitpoint = partition(alist,first,last)
 
-       splitpoint = partition(alist,first,last)
-
-       quickSortHelper(alist,first,splitpoint-1)
-       quickSortHelper(alist,splitpoint+1,last)
+		quickSortHelper(alist,first,splitpoint-1)
+		quickSortHelper(alist,splitpoint+1,last)
 
 def partition(alist,first,last):
 	pivotvalue = alist[first].get('urls')
