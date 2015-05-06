@@ -61,7 +61,7 @@ def translateWords(data):
 		# if keyCount == len(a):
 		# 	print 'complete'
 	return wordList
-	
+
 #quick Sort
 def quickSort(alist):
 	maximum = 2*(len(alist)+1)
@@ -101,9 +101,7 @@ def partition(alist,first,last):
 	alist[first] = alist[rightmark]
 	alist[rightmark] = temp
 
-
 	return rightmark
-quickSort(data)
 
 def insert_data(email, link, words):
 	app.logger.info(email)
