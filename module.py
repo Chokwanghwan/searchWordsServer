@@ -64,9 +64,6 @@ def translateWords(data):
 	return wordList
 
 def insert_data(email, link, words):
-	app.logger.info(email)
-	app.logger.info(link)
-	app.logger.info(len(words))
 	user = User.get(email)
 	url = Url.get(link)
 
@@ -92,7 +89,6 @@ def select_word_for_web(email, link):
 
 	deleted_word_list = []
 	word_list = []
-
 	for word in url.words:
 		wb = WordBook.query.filter_by(user_id=user.id, word_id=word.id).first()
 		w = Word.query.filter_by(id=wb.word_id).first()
@@ -110,9 +106,10 @@ def select_word_for_web(email, link):
 
 def select_word_for_mobile(email):
 	user = User.get(email)
-
+	app.logger.info(email)
 	word_list = []
 	for word in user.word_books:
+
 		w = Word.query.filter_by(id=word.id).first()
 		english = w.english
 		mean = w.mean
@@ -122,6 +119,7 @@ def select_word_for_mobile(email):
 			word_list.append(words)
 	word_list = words_list_sorted(word_list)
 	word_list = json.dumps(word_list)
+	app.logger.info()
 	return word_list
 
 def select_delete_word_for_mobile(email):
