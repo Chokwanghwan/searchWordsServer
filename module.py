@@ -161,9 +161,10 @@ def select_word_for_mobile(email):
         english = w.english
         mean = w.mean
 
-        words = {'english': english, 'mean': mean}
+        words = {'english': english, 'mean': mean, 'urls':len(wb.refer_urls.all())}
         if not word.is_deleted:
             word_list.append(words)
+    quickSort(word_list)        
     word_list = json.dumps(word_list)
     return word_list
 
