@@ -62,7 +62,7 @@ def translateWords(data):
 
 #quick Sort
 def quickSort(alist):
-	sys.setrecursionlimit(len(alist+1))
+	sys.setrecursionlimit(len(alist)+1)
 	quickSortHelper(alist,0,len(alist)-1)
 
 def quickSortHelper(alist,first,last):
