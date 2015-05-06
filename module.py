@@ -62,47 +62,6 @@ def translateWords(data):
 		# 	print 'complete'
 	return wordList
 
-#quick Sort
-def quickSort(alist):
-	maximum = 2*(len(alist)+1)
-	sys.setrecursionlimit(maximum)
-	quickSortHelper(alist,0,len(alist)-1)
-
-def quickSortHelper(alist,first,last):
-	if first<last:
-		splitpoint = partition(alist,first,last)
-
-		quickSortHelper(alist,first,splitpoint-1)
-		quickSortHelper(alist,splitpoint+1,last)
-
-def partition(alist,first,last):
-	pivotvalue = alist[first].get('urls')
-
-	leftmark = first+1
-	rightmark = last
-
-	done = False
-	while not done:
-
-		while leftmark <= rightmark and alist[leftmark].get('urls') >= pivotvalue:
-			leftmark = leftmark + 1
-
-		while alist[rightmark].get('urls') <= pivotvalue and rightmark >= leftmark:
-			rightmark = rightmark -1
-
-		if rightmark < leftmark:
-			done = True
-		else:
-			temp = alist[leftmark]
-			alist[leftmark] = alist[rightmark]
-			alist[rightmark] = temp
-
-	temp = alist[first]
-	alist[first] = alist[rightmark]
-	alist[rightmark] = temp
-
-	return rightmark
-
 def insert_data(email, link, words):
 	app.logger.info(email)
 	app.logger.info(link)
@@ -140,15 +99,15 @@ def select_word_for_web(email, link):
 			deleted_word_list.append(words)
 		else:
 			word_list.append(words)
-	quickSort(word_list)
 	word_list = json.dumps(word_list)        
 	return word_list
 
 def select_word_for_mobile(email):
 	user = User.get(email)
+	word_books = user.word_books.outerjoin(ReferUrl).group_by(WordBook.id)
 
 	word_list = []
-	for word in user.word_books:
+	for word in word_books:
 		w = Word.query.filter_by(id=word.id).first()
 		english = w.english
 		mean = w.mean
@@ -156,7 +115,6 @@ def select_word_for_mobile(email):
 		words = {'english': english, 'mean': mean, 'urls':len(word.refer_urls.all())}
 		if not word.is_deleted:
 			word_list.append(words)
-	quickSort(word_list)
 	word_list = json.dumps(word_list)
 	return word_list
 
@@ -172,7 +130,6 @@ def select_delete_word_for_mobile(email):
 		words = {'english': english, 'mean': mean, 'urls':len(word.refer_urls.all())}
 		if word.is_deleted:
 			deleted_word_list.append(words)
-	quickSort(deleted_word_list)
 	deleted_word_list = json.dumps(deleted_word_list)
 	return deleted_word_list
 
