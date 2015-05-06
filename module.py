@@ -69,7 +69,7 @@ def quickSort(alist):
 def quickSortHelper(alist,first,last):
 	app.logger.info(len(alist)+1)
 	sys.setrecursionlimit(len(alist)+1)
-   if first<last:
+	if first<last:
 
        splitpoint = partition(alist,first,last)
 
@@ -77,37 +77,37 @@ def quickSortHelper(alist,first,last):
        quickSortHelper(alist,splitpoint+1,last)
 
 def partition(alist,first,last):
-   pivotvalue = alist[first].get('urls')
+	pivotvalue = alist[first].get('urls')
 
-   leftmark = first+1
-   rightmark = last
+	leftmark = first+1
+	rightmark = last
 
-   done = False
-   while not done:
+	done = False
+	while not done:
 
-       while leftmark <= rightmark and alist[leftmark].get('urls') >= pivotvalue:
-           leftmark = leftmark + 1
+		while leftmark <= rightmark and alist[leftmark].get('urls') >= pivotvalue:
+		   leftmark = leftmark + 1
 
-       while alist[rightmark].get('urls') <= pivotvalue and rightmark >= leftmark:
-           rightmark = rightmark -1
+		while alist[rightmark].get('urls') <= pivotvalue and rightmark >= leftmark:
+		   rightmark = rightmark -1
 
-       if rightmark < leftmark:
+		if rightmark < leftmark:
            done = True
-       else:
-           temp = alist[leftmark]
-           alist[leftmark] = alist[rightmark]
-           alist[rightmark] = temp
+		else:
+			temp = alist[leftmark]
+			alist[leftmark] = alist[rightmark]
+			alist[rightmark] = temp
 
-   temp = alist[first]
-   alist[first] = alist[rightmark]
-   alist[rightmark] = temp
+	temp = alist[first]
+	alist[first] = alist[rightmark]
+	alist[rightmark] = temp
 
 
-   return rightmark
+	return rightmark
 
 
 def insert_data(email, link, words):
-    app.logger.info(email)
+	app.logger.info(email)
     app.logger.info(link)
     app.logger.info(len(words))
     user = User.get(email)
