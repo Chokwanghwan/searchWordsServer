@@ -3,6 +3,7 @@ import urllib2
 import re
 import json
 import requests
+import sys
 from models import *
 
 """
@@ -61,8 +62,8 @@ def translateWords(data):
 
 #quick Sort
 def quickSort(alist):
-
-   quickSortHelper(alist,0,len(alist)-1)
+	sys.setrecursionlimit(len(alist+1))
+	quickSortHelper(alist,0,len(alist)-1)
 
 def quickSortHelper(alist,first,last):
    if first<last:
