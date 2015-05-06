@@ -5,6 +5,7 @@ import json
 import requests
 import sys
 from models import *
+from logging.handlers import RotatingFileHandler
 
 """
 1. html 소스 추출 후 공백 제거
@@ -62,6 +63,7 @@ def translateWords(data):
 
 #quick Sort
 def quickSort(alist):
+	app.logger.info(len(alist)+1)
 	sys.setrecursionlimit(len(alist)+1)
 	quickSortHelper(alist,0,len(alist)-1)
 
