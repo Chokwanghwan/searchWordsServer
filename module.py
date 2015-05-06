@@ -91,7 +91,7 @@ def partition(alist,first,last):
 			rightmark = rightmark -1
 
 		if rightmark < leftmark:
-        	done = True
+			done = True
 		else:
 			temp = alist[leftmark]
 			alist[leftmark] = alist[rightmark]
