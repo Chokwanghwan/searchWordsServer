@@ -4,6 +4,7 @@ import re
 import json
 import requests
 import sys
+from operator import itemgetter
 
 from models import *
 from logging.handlers import RotatingFileHandler
@@ -81,6 +82,10 @@ def insert_data(email, link, words):
 		word_book = WordBook.get(user, word)
 		word_book.make_relationship_referurl(url)
 
+def words_list_sorted(words):
+	sorted_words = sorted(words, key=itemgetter('urls'),reverse=True)
+	return sorted_words
+
 def select_word_for_web(email, link):
 	user = User.get(email)
 	url = Url.get(link)
@@ -99,15 +104,15 @@ def select_word_for_web(email, link):
 			deleted_word_list.append(words)
 		else:
 			word_list.append(words)
+	word_list = words_list_sorted(word_list)
 	word_list = json.dumps(word_list)        
 	return word_list
 
 def select_word_for_mobile(email):
 	user = User.get(email)
-	word_books = user.word_books.outerjoin(ReferUrl).group_by(WordBook.id)
 
 	word_list = []
-	for word in word_books:
+	for word in user.word_books:
 		w = Word.query.filter_by(id=word.id).first()
 		english = w.english
 		mean = w.mean
@@ -115,6 +120,7 @@ def select_word_for_mobile(email):
 		words = {'english': english, 'mean': mean, 'urls':len(word.refer_urls.all())}
 		if not word.is_deleted:
 			word_list.append(words)
+	word_list = words_list_sorted(word_list)
 	word_list = json.dumps(word_list)
 	return word_list
 
@@ -130,8 +136,10 @@ def select_delete_word_for_mobile(email):
 		words = {'english': english, 'mean': mean, 'urls':len(word.refer_urls.all())}
 		if word.is_deleted:
 			deleted_word_list.append(words)
+	word_list = words_list_sorted(deleted_word_list)
 	deleted_word_list = json.dumps(deleted_word_list)
 	return deleted_word_list
+
 
 def find_user_info(email):
 	user = User.get(email)
