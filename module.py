@@ -102,13 +102,13 @@ def partition(alist,first,last):
 
 
 def dbException():
-failed=False
-try:
-    db.session.commit()
-except Exception as e:
-    db.session.rollback()
-    db.session.flush()
-    failed=True
+	failed=False
+	try:
+	    db.session.commit()
+	except Exception as e:
+	    db.session.rollback()
+	    db.session.flush()
+	    failed=True
 
 def insert_data(email, link, words):
     app.logger.info(email)
