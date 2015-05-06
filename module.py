@@ -119,7 +119,7 @@ def select_word_for_mobile(email):
 			word_list.append(words)
 	word_list = words_list_sorted(word_list)
 	word_list = json.dumps(word_list)
-	app.logger.info(wordList)
+	app.logger.info(word_list)
 	return word_list
 
 def select_delete_word_for_mobile(email):
