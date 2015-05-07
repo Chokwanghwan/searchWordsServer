@@ -109,7 +109,7 @@ def select_word_for_web(email, link):
 				word_list.append(words)
 	app.logger.info("web select word len = %d", len(word_list))
 	word_list = words_list_sorted(word_list)
-	word_list = json.dumps(word_list)        
+	word_list = json.dumps(word_list)
 	return word_list
 
 def select_word_for_mobile(email):
@@ -119,7 +119,9 @@ def select_word_for_mobile(email):
 	for word in user.word_books:
 		if not word is None:
 			w = Word.query.filter_by(id=word.id).first()
-			english = w.english
+			if w is None:
+				continue
+			english = w.english 
 			mean = w.mean
 
 			words = {'english': english, 'mean': mean, 'urls':len(word.refer_urls.all())}
