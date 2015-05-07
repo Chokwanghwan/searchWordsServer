@@ -46,21 +46,22 @@ def translateWords(data):
 	# a = ['hello', 'bye', 'fuck', 'home', 'hoho', 'bye', 'bye', '123123', '안녕하세요']
 	wordList = []
 	for i in data:
-		url = "http://tooltip.dic.naver.com/tooltip.nhn?wordString="+i+"&languageCode=4&nlp=false";
-		request = requests.get(url)
-		result = request.text
-		# response = urllib2.urlopen(url)
-		result = json.loads(result)
-		# keyCount = keyCount+1
-		if ('entryName' in result):
-			english = result['entryName']
-			mean = result['mean']
-			# print english
-			# print mean
-			if (not english in wordList):
-				wordList.append({'english': english, 'mean': mean})
-		# if keyCount == len(a):
-		# 	print 'complete'
+		if not i is None:
+			url = "http://tooltip.dic.naver.com/tooltip.nhn?wordString="+i+"&languageCode=4&nlp=false";
+			request = requests.get(url)
+			result = request.text
+			# response = urllib2.urlopen(url)
+			result = json.loads(result)
+			# keyCount = keyCount+1
+			if ('entryName' in result):
+				english = result['entryName']
+				mean = result['mean']
+				# print english
+				# print mean
+				if (not english in wordList):
+					wordList.append({'english': english, 'mean': mean})
+			# if keyCount == len(a):
+			# 	print 'complete'
 	return wordList
 
 def insert_data(email, link, words):
