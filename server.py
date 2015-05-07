@@ -17,7 +17,6 @@ email, url과 함께 DB에 넣는 작업을 위한 url이다.
 @app.route('/searchWords/insertData', methods=['POST'])
 def post_for_insert():
 	datas = request.get_json()
-	app.logger.info('*webInsertLog : %s', datas)
 	email = datas[u'email']
 	url = datas[u'url']
 	words = datas[u'words'].values()
