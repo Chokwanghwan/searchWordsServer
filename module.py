@@ -46,7 +46,9 @@ def translateWords(data):
 	# a = ['hello', 'bye', 'fuck', 'home', 'hoho', 'bye', 'bye', '123123', '안녕하세요']
 	wordList = []
 	for i in data:
-		if not i is None:
+		data = re.sub(r'[\.]', '', i)	
+		data = re.sub(r'[^a-zA-Z]', '', i)
+		if not data is '':
 			url = "http://tooltip.dic.naver.com/tooltip.nhn?wordString="+i+"&languageCode=4&nlp=false";
 			request = requests.get(url)
 			result = request.text
