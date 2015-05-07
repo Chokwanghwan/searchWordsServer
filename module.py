@@ -122,7 +122,7 @@ def select_word_for_mobile(email):
 		mean = w.mean
 
 		words = {'english': english, 'mean': mean, 'urls':len(wb.refer_urls.all())}
-		if not word.is_deleted:
+		if not wb.is_deleted:
 			word_list.append(words)
 	app.logger.info("mobile select word len = %d", len(word_list))			
 	word_list = words_list_sorted(word_list)
@@ -139,7 +139,7 @@ def select_delete_word_for_mobile(email):
 		mean = w.mean
 
 		words = {'english': english, 'mean': mean, 'urls':len(wb.refer_urls.all())}
-		if word.is_deleted:
+		if wb.is_deleted:
 			deleted_word_list.append(words)
 	word_list = words_list_sorted(deleted_word_list)
 	deleted_word_list = json.dumps(deleted_word_list)
