@@ -116,17 +116,14 @@ def select_word_for_mobile(email):
 	user = User.get(email)
 	word_list = []
 	app.logger.info("mobile select user = %s", email)
-	for word in user.word_books:
-		if not word is None:
-			w = Word.query.filter_by(id=word.id).first()
-			if w is None:
-				continue
-			english = w.english 
-			mean = w.mean
+	for wb in user.word_books:
+		w = Word.query.filter_by(id=wb.word_id).first()
+		english = w.english 
+		mean = w.mean
 
-			words = {'english': english, 'mean': mean, 'urls':len(word.refer_urls.all())}
-			if not word.is_deleted:
-				word_list.append(words)
+		words = {'english': english, 'mean': mean, 'urls':len(word.refer_urls.all())}
+		if not word.is_deleted:
+			word_list.append(words)
 	app.logger.info("mobile select word len = %d", len(word_list))			
 	word_list = words_list_sorted(word_list)
 	word_list = json.dumps(word_list)
@@ -136,15 +133,14 @@ def select_delete_word_for_mobile(email):
 	user = User.get(email)
 
 	deleted_word_list = []
-	for word in user.word_books:
-		if not word is None:
-			w = Word.query.filter_by(id=word.id).first()
-			english = w.english
-			mean = w.mean
+	for wb in user.word_books:
+		w = Word.query.filter_by(id=wb.word_id).first()
+		english = w.english
+		mean = w.mean
 
-			words = {'english': english, 'mean': mean, 'urls':len(word.refer_urls.all())}
-			if word.is_deleted:
-				deleted_word_list.append(words)
+		words = {'english': english, 'mean': mean, 'urls':len(word.refer_urls.all())}
+		if word.is_deleted:
+			deleted_word_list.append(words)
 	word_list = words_list_sorted(deleted_word_list)
 	deleted_word_list = json.dumps(deleted_word_list)
 	return deleted_word_list
