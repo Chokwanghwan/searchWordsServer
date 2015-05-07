@@ -99,7 +99,6 @@ def select_word_for_web(email, link):
 		if not word is None:
 			wb = WordBook.query.filter_by(user_id=user.id, word_id=word.id).first()
 			w = Word.query.filter_by(id=wb.word_id).first()
-			app.logger.info("web select word len = %d", len(w.english))
 			english = w.english
 			mean = w.mean.split(',')
 
@@ -108,6 +107,7 @@ def select_word_for_web(email, link):
 				deleted_word_list.append(words)
 			else:
 				word_list.append(words)
+	app.logger.info("web select word len = %d", len(word_list.get('english')))
 	word_list = words_list_sorted(word_list)
 	word_list = json.dumps(word_list)        
 	return word_list
@@ -119,13 +119,13 @@ def select_word_for_mobile(email):
 	for word in user.word_books:
 		if not word is None:
 			w = Word.query.filter_by(id=word.id).first()
-			app.logger.info("mobile select word len = %d", len(w.english))
 			english = w.english
 			mean = w.mean
 
 			words = {'english': english, 'mean': mean, 'urls':len(word.refer_urls.all())}
 			if not word.is_deleted:
 				word_list.append(words)
+	app.logger.info("mobile select word len = %d", len(word_list.get('english')))			
 	word_list = words_list_sorted(word_list)
 	word_list = json.dumps(word_list)
 	return word_list
