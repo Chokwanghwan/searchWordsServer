@@ -93,12 +93,12 @@ def select_word_for_web(email, link):
 
 	deleted_word_list = []
 	word_list = []
+	app.logger.info("web select user = %s", email)
+	app.logger.info("web select url = %s", link)
 	for word in url.words:
 		if not word is None:
 			wb = WordBook.query.filter_by(user_id=user.id, word_id=word.id).first()
 			w = Word.query.filter_by(id=wb.word_id).first()
-			app.logger.info("web select user = %s", email)
-			app.logger.info("web select url = %s", email)
 			if type(w.english) is str:
 				app.logger.info("web select word len = %d", len(w.english))
 			english = w.english
@@ -116,10 +116,10 @@ def select_word_for_web(email, link):
 def select_word_for_mobile(email):
 	user = User.get(email)
 	word_list = []
+	app.logger.info("mobile select user = %s", email)
 	for word in user.word_books:
 		if not word is None:
 			w = Word.query.filter_by(id=word.id).first()
-			app.logger.info("mobile select user = %s", email)
 			if type(w.english) is str:
 				app.logger.info("mobile select word len = %d", len(w.english))
 			english = w.english
