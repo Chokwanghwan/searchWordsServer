@@ -71,14 +71,15 @@ def insert_data(email, link, words):
 	user.make_relationship_url(url)
 
 	for user_word in words:
-		english = user_word.get('english')
-		mean = user_word.get('mean')
-		mean = ','.join(mean)
-		word = Word.get(english, mean)
-		url.make_relationship_word(word)
+		if not user_word is None:
+			english = user_word.get('english')
+			mean = user_word.get('mean')
+			mean = ','.join(mean)
+			word = Word.get(english, mean)
+			url.make_relationship_word(word)
 
-		word_book = WordBook.get(user, word)
-		word_book.make_relationship_referurl(url)
+			word_book = WordBook.get(user, word)
+			word_book.make_relationship_referurl(url)
 
 def words_list_sorted(words):
 	sorted_words = sorted(words, key=itemgetter('urls'),reverse=True)
@@ -91,6 +92,7 @@ def select_word_for_web(email, link):
 	deleted_word_list = []
 	word_list = []
 	for word in url.words:
+		if not word is None:
 		wb = WordBook.query.filter_by(user_id=user.id, word_id=word.id).first()
 		w = Word.query.filter_by(id=wb.word_id).first()
 		english = w.english
@@ -110,14 +112,14 @@ def select_word_for_mobile(email):
 	app.logger.info(email)
 	word_list = []
 	for word in user.word_books:
+		if not word is None:
+			w = Word.query.filter_by(id=word.id).first()
+			english = w.english
+			mean = w.mean
 
-		w = Word.query.filter_by(id=word.id).first()
-		english = w.english
-		mean = w.mean
-
-		words = {'english': english, 'mean': mean, 'urls':len(word.refer_urls.all())}
-		if not word.is_deleted:
-			word_list.append(words)
+			words = {'english': english, 'mean': mean, 'urls':len(word.refer_urls.all())}
+			if not word.is_deleted:
+				word_list.append(words)
 	word_list = words_list_sorted(word_list)
 	word_list = json.dumps(word_list)
 	app.logger.info(word_list)
@@ -128,13 +130,14 @@ def select_delete_word_for_mobile(email):
 
 	deleted_word_list = []
 	for word in user.word_books:
-		w = Word.query.filter_by(id=word.id).first()
-		english = w.english
-		mean = w.mean
+		if not word is None:
+			w = Word.query.filter_by(id=word.id).first()
+			english = w.english
+			mean = w.mean
 
-		words = {'english': english, 'mean': mean, 'urls':len(word.refer_urls.all())}
-		if word.is_deleted:
-			deleted_word_list.append(words)
+			words = {'english': english, 'mean': mean, 'urls':len(word.refer_urls.all())}
+			if word.is_deleted:
+				deleted_word_list.append(words)
 	word_list = words_list_sorted(deleted_word_list)
 	deleted_word_list = json.dumps(deleted_word_list)
 	return deleted_word_list
