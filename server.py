@@ -17,7 +17,7 @@ email, url과 함께 DB에 넣는 작업을 위한 url이다.
 @app.route('/searchWords/insertData', methods=['POST'])
 def post_for_insert():
 	datas = request.get_json()
-	# app.logger.info(datas)
+	app.logger.info('*webInsertLog : %s', datas)
 	email = datas[u'email']
 	url = datas[u'url']
 	words = datas[u'words'].values()
@@ -34,7 +34,8 @@ def post_for_insert_for_mobile():
 	page_source = htmlParsing(url)
 	data = extractContent(page_source)
 	words = translateWords(data)
-	app.logger.info(words)
+
+	app.logger.info('*mobileInsertLog : %s', words)
 	
 	insert_data(email, url, words)
 	return 'OK'
@@ -48,10 +49,10 @@ def post_for_select_web():
 	datas = request.get_json()
 	email = datas[u'email']
 	url = datas[u'url']
+	app.logger.info('*selectWeb : %s', datas)
 
-	# email = request.values.get('email')
-	# url = request.values.get('url')
 	data = select_word_for_web(email, url)
+	app.logger.info('*selectWebData : %s', data)
 
 	return data
 
@@ -62,7 +63,9 @@ email을 넘기고 그 정보로 단어를 select해서 mobile client에 return 
 @app.route('/searchWords/selectDataForMobile', methods=['GET'])
 def select_word_mobile():
 	email = request.args.get('email')
+	app.logger.info('*selectMobile : %s', email)
 	data = select_word_for_mobile(email)
+	app.logger.info('*selectWeb : %s', data)
 
 	return data
 
@@ -72,7 +75,9 @@ def select_word_mobile():
 @app.route('/searchWords/selectDeletedDataForMobile', methods=['GET'])
 def select_deleted_word_mobile():
 	email = request.args.get('email')
+	app.logger.info('*deleteMobile : %s', email)
 	data = select_delete_word_for_mobile(email)
+	app.logger.info('*deleteMobile : %s', data)
 
 	return data
 
