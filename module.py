@@ -111,11 +111,11 @@ def select_word_for_web(email, link):
 
 def select_word_for_mobile(email):
 	user = User.get(email)
-	app.logger.info(email)
 	word_list = []
 	for word in user.word_books:
 		if not word is None:
 			w = Word.query.filter_by(id=word.id).first()
+			app.logger.info(w.english)
 			english = w.english
 			mean = w.mean
 
@@ -124,7 +124,6 @@ def select_word_for_mobile(email):
 				word_list.append(words)
 	word_list = words_list_sorted(word_list)
 	word_list = json.dumps(word_list)
-	app.logger.info(word_list)
 	return word_list
 
 def select_delete_word_for_mobile(email):
