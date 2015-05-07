@@ -107,7 +107,7 @@ def select_word_for_web(email, link):
 				deleted_word_list.append(words)
 			else:
 				word_list.append(words)
-	app.logger.info("web select word len = %d", len(word_list.get('english')))
+	app.logger.info("web select word len = %d", len(word_list))
 	word_list = words_list_sorted(word_list)
 	word_list = json.dumps(word_list)        
 	return word_list
@@ -125,7 +125,7 @@ def select_word_for_mobile(email):
 			words = {'english': english, 'mean': mean, 'urls':len(word.refer_urls.all())}
 			if not word.is_deleted:
 				word_list.append(words)
-	app.logger.info("mobile select word len = %d", len(word_list.get('english')))			
+	app.logger.info("mobile select word len = %d", len(word_list))			
 	word_list = words_list_sorted(word_list)
 	word_list = json.dumps(word_list)
 	return word_list
