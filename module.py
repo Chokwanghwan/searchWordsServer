@@ -118,15 +118,13 @@ def select_word_for_mobile(email):
 	word_list = []
 	app.logger.info("mobile select user = %s", email)
 	old = datetime.now()
-	# for wb in user.word_books.filter_by(is_deleted=False).all():
-	for wb in user.word_books:
+	for wb in user.word_books.filter_by(is_deleted=False).all():
 		w = Word.query.filter_by(id=wb.word_id).first()
 		english = w.english
 		mean = w.mean
 
 		words = {'english': english, 'mean': mean, 'urls':len(wb.refer_urls.all())}
-		if not wb.is_deleted:
-			word_list.append(words)
+		word_list.append(words)
 	current = datetime.now()
 	lapse = current - old
 	app.logger.info("laps = %s", lapse.__str__())
