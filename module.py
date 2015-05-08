@@ -4,6 +4,7 @@ import re
 import json
 import requests
 import sys
+from datetime import datetime
 from operator import itemgetter
 
 from models import *
@@ -116,15 +117,20 @@ def select_word_for_mobile(email):
 	user = User.get(email)
 	word_list = []
 	app.logger.info("mobile select user = %s", email)
+	old = datetime.now()
+	# for wb in user.word_books.filter_by(is_deleted=False).all():
 	for wb in user.word_books:
 		w = Word.query.filter_by(id=wb.word_id).first()
-		english = w.english 
+		english = w.english
 		mean = w.mean
 
 		words = {'english': english, 'mean': mean, 'urls':len(wb.refer_urls.all())}
 		if not wb.is_deleted:
 			word_list.append(words)
-	app.logger.info("mobile select word len = %d", len(word_list))			
+	current = datetime.now()
+	lapse = current - old
+	app.logger.info("laps = %s", lapse.__str__())
+	app.logger.info("mobile select word len = %d", len(word_list))
 	word_list = words_list_sorted(word_list)
 	word_list = json.dumps(word_list)
 	return word_list
@@ -133,18 +139,16 @@ def select_delete_word_for_mobile(email):
 	user = User.get(email)
 
 	deleted_word_list = []
-	for wb in user.word_books:
+	for wb in user.word_books.filter_by(is_deleted=True).all():
 		w = Word.query.filter_by(id=wb.word_id).first()
 		english = w.english
 		mean = w.mean
 
 		words = {'english': english, 'mean': mean, 'urls':len(wb.refer_urls.all())}
-		if wb.is_deleted:
-			deleted_word_list.append(words)
+		deleted_word_list.append(words)
 	word_list = words_list_sorted(deleted_word_list)
 	deleted_word_list = json.dumps(deleted_word_list)
 	return deleted_word_list
-
 
 def find_user_info(email):
 	user = User.get(email)
