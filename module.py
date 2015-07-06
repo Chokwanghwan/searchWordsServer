@@ -33,7 +33,7 @@ def extractContent(page_source):
 	data = re.sub(r'\<title.*?</title>', '', data)
 	data = re.sub(r'\<style.*?</style>', '', data)
 	data = re.sub(r'\<script.*?</script>', '', data)
-	data = re.sub(r'\<pre.*?</pre>', '', data)	
+	data = re.sub(r'\<pre.*?</pre>', '', data)
 	data = re.sub(r'&nbsp;', '', data)
 	data = re.sub(r'[\d]', '', data)
 	data = re.sub(r'\b\w\b', '', data)
@@ -94,6 +94,7 @@ def select_word_for_web(email, link):
 
 	deleted_word_list = []
 	word_list = []
+	
 	app.logger.info("web select user = %s", email)
 	app.logger.info("web select url = %s", link)
 	for word in url.words:
@@ -125,6 +126,7 @@ def select_word_for_mobile(email):
 
 		words = {'english': english, 'mean': mean, 'urls':len(wb.refer_urls.all())}
 		word_list.append(words)
+	
 	current = datetime.now()
 	lapse = current - old
 	app.logger.info("laps = %s", lapse.__str__())
@@ -157,3 +159,23 @@ def find_user_info(email):
 
 	count = {'all_word_count': all_word_count, 'deleted_word_count': deleted_word_count, 'url_count': url_count}
 	return json.dumps(count)
+
+def get_all_words():
+	words = Word.query.all()
+
+	all_words_list = []
+	for w in words:
+		word = {'english': w.english, 'mean': w.mean}
+		all_words_list.append(word);
+	return json.dumps(all_words_list)
+
+
+
+
+
+
+
+
+
+
+
