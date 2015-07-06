@@ -8,7 +8,7 @@ from logging.handlers import RotatingFileHandler
 
 @app.route('/', methods=['GET'])
 def index():
-	return 'hello SearchWord'
+	return 'hello index'
 
 """ 
 web client의 background.js에서 본문추출하고 번역한 데이터를 
@@ -95,13 +95,13 @@ def post_for_update():
 @app.route('/userInfo', methods=['GET'])
 def get_for_userInfo():
 	email = request.args.get('email')
-	data = find_user_info(email);
+	data = find_user_info(email)
 
 	return data
 
 @app.route('/allWords', methods=['GET'])
 def get_all_words():
-	data = get_all_words()
+	data = find_all_words()
 	
 	return data
 

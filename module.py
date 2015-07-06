@@ -160,13 +160,11 @@ def find_user_info(email):
 	count = {'all_word_count': all_word_count, 'deleted_word_count': deleted_word_count, 'url_count': url_count}
 	return json.dumps(count)
 
-def get_all_words():
-	words = Word.query.all()
-
+def find_all_words():
 	all_words_list = []
-	for w in words:
+	for w in Word.query.all():
 		word = {'english': w.english, 'mean': w.mean}
-		all_words_list.append(word);
+		all_words_list.append(word)
 	return json.dumps(all_words_list)
 
 
