@@ -99,7 +99,14 @@ def get_for_userInfo():
 
 	return data
 
+@app.route('/allWords', methods=['GET'])
+def get_all_words():
+	data = get_all_words()
+	
+	return data
+
+
 if __name__ == '__main__':
-	handler = RotatingFileHandler('myWord.log', maxBytes=10000, backupCount=1)
+	handler = RotatingFileHandler('myWord_log_1.log', maxBytes=10000, backupCount=1)
 	app.logger.addHandler(handler)
 	app.run(debug=True, host='0.0.0.0', threaded=True)
