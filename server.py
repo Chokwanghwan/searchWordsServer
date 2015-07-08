@@ -100,6 +100,7 @@ def get_for_userInfo():
 	return data
 
 @app.route('/allWords', methods=['GET'])
+@cross_origin() # allow all origins all methods.
 def get_all_words():
 	data = find_all_words()
 	
