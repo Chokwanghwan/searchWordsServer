@@ -2,6 +2,7 @@
 from flask import request, json
 import os, logging
 from module import *
+from decorator import *
 
 
 from logging.handlers import RotatingFileHandler
@@ -100,7 +101,7 @@ def get_for_userInfo():
 	return data
 
 @app.route('/allWords', methods=['GET'])
-@cross_origin() # allow all origins all methods.
+@crossdomain(origin='*') # allow all origins all methods.
 def get_all_words():
 	data = find_all_words()
 	
