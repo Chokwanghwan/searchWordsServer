@@ -103,8 +103,9 @@ def select_word_for_web(email, link):
 			w = Word.query.filter_by(id=wb.word_id).first()
 			english = w.english
 			mean = w.mean.split(',')
-
-			words = {'english': english, 'mean': mean, 'urls':len(wb.refer_urls.all())}
+			# 심각한 속도 저하를 유발하는 부분
+			# words = {'english': english, 'mean': mean, 'urls':len(wb.refer_urls.all())}
+			words = {'english': english, 'mean': mean}
 			if wb.is_deleted:
 				deleted_word_list.append(words)
 			else:
@@ -123,8 +124,9 @@ def select_word_for_mobile(email):
 		w = Word.query.filter_by(id=wb.word_id).first()
 		english = w.english
 		mean = w.mean
-
-		words = {'english': english, 'mean': mean, 'urls':len(wb.refer_urls.all())}
+		# 심각한 속도 저하를 유발하는 부분
+		# words = {'english': english, 'mean': mean, 'urls':len(wb.refer_urls.all())}
+		words = {'english': english, 'mean': mean}
 		word_list.append(words)
 	
 	current = datetime.now()
