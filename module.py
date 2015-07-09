@@ -94,17 +94,16 @@ def select_word_for_web(email, link):
 
 	deleted_word_list = []
 	word_list = []
-	
 	app.logger.info("web select user = %s", email)
 	app.logger.info("web select url = %s", link)
 	for word in url.words:
 		if not word is None:
 			wb = WordBook.query.filter_by(user_id=user.id, word_id=word.id).first()
 			w = Word.query.filter_by(id=wb.word_id).first()
-			r = ReferUrl.query.filter_by(word_book_id=wb.id).count()
 			english = w.english
 			mean = w.mean.split(',')
-			words = {'english': english, 'mean': mean, 'urls':r}
+
+			words = {'english': english, 'mean': mean, 'urls':len(wb.refer_urls.all())}
 			if wb.is_deleted:
 				deleted_word_list.append(words)
 			else:
@@ -112,7 +111,7 @@ def select_word_for_web(email, link):
 	app.logger.info("web select word len = %d", len(word_list))
 	word_list = words_list_sorted(word_list)
 	word_list = json.dumps(word_list)
-	return word_list
+	return word_list	
 
 def select_word_for_mobile(email):
 	user = User.get(email)
@@ -123,9 +122,7 @@ def select_word_for_mobile(email):
 		w = Word.query.filter_by(id=wb.word_id).first()
 		english = w.english
 		mean = w.mean
-		# 심각한 속도 저하를 유발하는 부분
-		# words = {'english': english, 'mean': mean, 'urls':len(wb.refer_urls.all())}
-		words = {'english': english, 'mean': mean}
+		words = {'english': english, 'mean': mean, 'urls':len(wb.refer_urls.all())}
 		word_list.append(words)
 	
 	current = datetime.now()
