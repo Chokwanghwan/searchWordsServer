@@ -101,11 +101,10 @@ def select_word_for_web(email, link):
 		if not word is None:
 			wb = WordBook.query.filter_by(user_id=user.id, word_id=word.id).first()
 			w = Word.query.filter_by(id=wb.word_id).first()
+			r = ReferUrl.query.filter_by(word_book_id=wb.id).count()
 			english = w.english
 			mean = w.mean.split(',')
-			# 심각한 속도 저하를 유발하는 부분
-			# words = {'english': english, 'mean': mean, 'urls':len(wb.refer_urls.all())}
-			words = {'english': english, 'mean': mean}
+			words = {'english': english, 'mean': mean, 'urls':r}
 			if wb.is_deleted:
 				deleted_word_list.append(words)
 			else:
