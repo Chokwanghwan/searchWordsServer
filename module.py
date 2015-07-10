@@ -99,15 +99,19 @@ def select_word_for_web(email, link):
 	for word in url.words:
 		if not word is None:
 			wb = WordBook.query.filter_by(user_id=user.id, word_id=word.id).first()
-			w = Word.query.filter_by(id=wb.word_id).first()
-			english = w.english
-			mean = w.mean.split(',')
-
-			words = {'english': english, 'mean': mean, 'urls':len(wb.refer_urls.all())}
-			if wb.is_deleted:
-				deleted_word_list.append(words)
+			if wb is None:
+				continue
 			else:
-				word_list.append(words)
+				w = Word.query.filter_by(id=wb.word_id).first()
+				url_count = ReferUrls.query.filter_by(word_book_id=wb.id).count()
+				english = w.english
+				mean = w.mean.split(',')
+
+				words = {'english': english, 'mean': mean, 'urls':url_count}
+				if wb.is_deleted:
+					deleted_word_list.append(words)
+				else:
+					word_list.append(words)
 	app.logger.info("web select word len = %d", len(word_list))
 	word_list = words_list_sorted(word_list)
 	word_list = json.dumps(word_list)
