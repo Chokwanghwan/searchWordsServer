@@ -99,11 +99,11 @@ def select_word_for_web(email, link):
 	for word in url.words:
 		if not word is None:
 			wb = WordBook.query.filter_by(user_id=user.id, word_id=word.id).first()
-			url_count = ReferUrl.query.filter_by(word_book_id=wb.id).count()
-			w = Word.query.filter_by(id=wb.word_id).first()
 			if wb is None:
 				continue
 			else:
+				w = Word.query.filter_by(id=wb.word_id).first()
+				url_count = ReferUrl.query.filter_by(word_book_id=wb.id).count()
 				english = w.english
 				mean = w.mean.split(',')
 
