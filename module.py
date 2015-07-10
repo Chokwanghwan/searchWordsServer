@@ -103,7 +103,7 @@ def select_word_for_web(email, link):
 				continue
 			else:
 				w = Word.query.filter_by(id=wb.word_id).first()
-				url_count = ReferUrls.query.filter_by(word_book_id=wb.id).count()
+				url_count = ReferUrl.query.filter_by(word_book_id=wb.id).count()
 				english = w.english
 				mean = w.mean.split(',')
 
