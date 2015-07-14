@@ -121,7 +121,8 @@ def select_word_for_web(email, link):
 
 				url_countX = timeCheck("w", 1)
 				# url_count = ReferUrl.query.filter_by(word_book_id=wb.id).count()
-				url_count = wb.refer_urls.count()
+				url_count = len(wb.refer_urls)
+				# url_count = wb.refer_urls.count()
 				url_countY = timeCheck("w", 2)
 				print("url_count 경과시간 : " + str(url_countY-url_countX))
 				english = w.english
