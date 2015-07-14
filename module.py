@@ -96,6 +96,7 @@ def timeCheck(flag, x):
 		return d
 
 def select_word_for_web(email, link):
+	methodX = timeCheck("메서드 시작", 1)
 	user = User.get(email)
 	url = Url.get(link)
 
@@ -103,24 +104,25 @@ def select_word_for_web(email, link):
 	word_list = []
 	app.logger.info("web select user = %s", email)
 	app.logger.info("web select url = %s", link)
+	forX = timeCheck("분기문 시작", 1)
 	for word in url.words:
 		if not word is None:
 			wbX = timeCheck("wb", 1)
 			wb = WordBook.query.filter_by(user_id=user.id, word_id=word.id).first()
 			wbY = timeCheck("wb", 2)
-			print(wbY-wbX)
+			print("wb 경과시간 : " + str(wbY-wbX))
 			if wb is None:
 				continue
 			else:
 				wX = timeCheck("w", 1)
 				w = Word.query.filter_by(id=wb.word_id).first()
 				wY = timeCheck("w", 2)
-				print(wY-wX)
+				print("w 경과시간 : " + str(wY-wX))
 
 				url_countX = timeCheck("w", 1)
 				url_count = ReferUrl.query.filter_by(word_book_id=wb.id).count()
 				url_countY = timeCheck("w", 1)
-				print(url_countY-url_countX)
+				print("url_count 경과시간 : " + str(url_countY-url_countX))
 				english = w.english
 				mean = w.mean.split(',')
 
@@ -129,9 +131,14 @@ def select_word_for_web(email, link):
 					deleted_word_list.append(words)
 				else:
 					word_list.append(words)
+	forY = timeCheck("분기문 종료", 2)	
+	print("반복문 수행 시간 : " + str(forY-forX))
+	print(forY-forX)
 	app.logger.info("web select word len = %d", len(word_list))
 	word_list = words_list_sorted(word_list)
 	word_list = json.dumps(word_list)
+	methodY = timeCheck("메서드 종료", 1)
+	print("메서드 전체 수행 시간 : " + str(methodY-methodX))
 	return word_list	
 
 def select_word_for_mobile(email):
