@@ -103,7 +103,7 @@ def get_for_userInfo():
 @app.route('/allWords', methods=['GET'])
 @crossdomain(origin='*') # allow all origins all methods.
 def get_all_words():
-	data = find_all_words()
+	data = find_all_words():
 	
 	return data
 

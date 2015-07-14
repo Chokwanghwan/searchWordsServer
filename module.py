@@ -4,7 +4,7 @@ import re
 import json
 import requests
 import sys
-from datetime import datetime
+import datetime
 from operator import itemgetter
 
 from models import *
@@ -88,6 +88,13 @@ def words_list_sorted(words):
 	sorted_words = sorted(words, key=itemgetter('urls'),reverse=True)
 	return sorted_words
 
+def timeCheck(flag, x):
+	d = datetime.datetime.now()
+	if x is 1:
+		return d
+	else:
+		return d
+
 def select_word_for_web(email, link):
 	user = User.get(email)
 	url = Url.get(link)
@@ -98,12 +105,22 @@ def select_word_for_web(email, link):
 	app.logger.info("web select url = %s", link)
 	for word in url.words:
 		if not word is None:
+			wbX = timeCheck("wb", 1)
 			wb = WordBook.query.filter_by(user_id=user.id, word_id=word.id).first()
+			wbY = timeCheck("wb", 2)
+			print(wbY-wbX)
 			if wb is None:
 				continue
 			else:
+				wX = timeCheck("w", 1)
 				w = Word.query.filter_by(id=wb.word_id).first()
+				wY = timeCheck("w", 2)
+				print(wY-wX)
+
+				url_countX = timeCheck("w", 1)
 				url_count = ReferUrl.query.filter_by(word_book_id=wb.id).count()
+				url_countY = timeCheck("w", 1)
+				print(url_countY-url_countX)
 				english = w.english
 				mean = w.mean.split(',')
 
