@@ -120,8 +120,9 @@ def select_word_for_web(email, link):
 				print("w 경과시간 : " + str(wY-wX))
 
 				url_countX = timeCheck("w", 1)
-				url_count = ReferUrl.query.filter_by(word_book_id=wb.id).count()
-				url_countY = timeCheck("w", 1)
+				# url_count = ReferUrl.query.filter_by(word_book_id=wb.id).count()
+				url_count = wb.refer_urls.count()
+				url_countY = timeCheck("w", 2)
 				print("url_count 경과시간 : " + str(url_countY-url_countX))
 				english = w.english
 				mean = w.mean.split(',')
@@ -137,7 +138,7 @@ def select_word_for_web(email, link):
 	app.logger.info("web select word len = %d", len(word_list))
 	word_list = words_list_sorted(word_list)
 	word_list = json.dumps(word_list)
-	methodY = timeCheck("메서드 종료", 1)
+	methodY = timeCheck("메서드 종료", 2)
 	print("메서드 전체 수행 시간 : " + str(methodY-methodX))
 	return word_list	
 
