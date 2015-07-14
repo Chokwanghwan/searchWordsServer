@@ -155,7 +155,7 @@ class WordBook(db.Model):
     word_id = db.Column(db.Integer, db.ForeignKey('word.id'))
     is_deleted = db.Column(db.Boolean, default=False)
     refer_urls = db.relationship('ReferUrl', backref='word_book',
-                                lazy='dynamic')
+                                lazy='joined')
     
     def __init__(cls, user_id, word_id):
         cls.user_id = user_id
