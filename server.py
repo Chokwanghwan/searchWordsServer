@@ -103,12 +103,12 @@ def get_for_userInfo():
 @app.route('/allWords', methods=['GET'])
 @crossdomain(origin='*') # allow all origins all methods.
 def get_all_words():
-	data = find_all_words():
-	
+	data = find_all_words()
+
 	return data
 
 
 if __name__ == '__main__':
 	handler = RotatingFileHandler('myWord_log_1.log', maxBytes=10000, backupCount=1)
 	app.logger.addHandler(handler)
-	app.run(debug=True, host='0.0.0.0', threaded=True)
+	app.run(debug=True, host='0.0.0.0')
