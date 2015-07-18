@@ -136,7 +136,7 @@ def select_word_for_web(email, link):
 	print("반복문 수행 시간 : " + str(forY-forX))
 	print(forY-forX)
 	app.logger.info("web select word len = %d", len(word_list))
-	word_list = words_list_sorted(word_list)
+	# word_list = words_list_sorted(word_list)
 	word_list = json.dumps(word_list)
 	methodY = timeCheck("메서드 종료", 2)
 	print("메서드 전체 수행 시간 : " + str(methodY-methodX))
