@@ -108,7 +108,7 @@ def select_word_for_web(email, link):
 	for word in url.words:
 		if not word is None:
 			wbX = timeCheck("wb", 1)
-			wb = WordBook.query.filter_by(user_id=user.id, word_id=word.id)
+			wb = WordBook.query.filter_by(user_id=user.id, word_id=word.id).first()
 			wbY = timeCheck("wb", 2)
 			print("wb 경과시간 : " + str(wbY-wbX))
 			if wb is None:
