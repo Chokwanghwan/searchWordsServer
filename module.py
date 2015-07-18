@@ -108,7 +108,7 @@ def select_word_for_web(email, link):
 	for word in url.words:
 		if not word is None:
 			wbX = timeCheck("wb", 1)
-			wb = WordBook.query.filter_by(user_id=user.id, word_id=word.id).first()
+			wb = WordBook.query.first()
 			wbY = timeCheck("wb", 2)
 			print("wb 경과시간 : " + str(wbY-wbX))
 			if wb is None:
@@ -119,16 +119,15 @@ def select_word_for_web(email, link):
 				wY = timeCheck("w", 2)
 				print("w 경과시간 : " + str(wY-wX))
 
-				url_countX = timeCheck("w", 1)
-				# url_count = ReferUrl.query.filter_by(word_book_id=wb.id).count()
-				url_count = len(wb.refer_urls)
-				# url_count = wb.refer_urls.count()
-				url_countY = timeCheck("w", 2)
-				print("url_count 경과시간 : " + str(url_countY-url_countX))
+				# url_countX = timeCheck("w", 1)
+				# url_count = len(wb.refer_urls)
+				# url_countY = timeCheck("w", 2)
+				# print("url_count 경과시간 : " + str(url_countY-url_countX))
 				english = w.english
 				mean = w.mean.split(',')
 
-				words = {'english': english, 'mean': mean, 'urls':url_count}
+				# words = {'english': english, 'mean': mean, 'urls':url_count}
+				words = {'english': english, 'mean': mean}
 				if wb.is_deleted:
 					deleted_word_list.append(words)
 				else:

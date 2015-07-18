@@ -148,14 +148,12 @@ class ReferUrl(db.Model):
         refer_url = cls.query.filter_by(word_book_id=wordbook.id, url_id=url.id).first()
         return refer_url
 
-
 class WordBook(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     word_id = db.Column(db.Integer, db.ForeignKey('word.id'))
     is_deleted = db.Column(db.Boolean, default=False)
-    refer_urls = db.relationship('ReferUrl', backref='word_book',
-                                lazy='joined')
+    refer_urls = db.relationship('ReferUrl')
     
     def __init__(cls, user_id, word_id):
         cls.user_id = user_id
