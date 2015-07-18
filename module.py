@@ -106,7 +106,9 @@ def select_word_for_web(email, link):
 	app.logger.info("web select url = %s", link)
 	forX = timeCheck("분기문 시작", 1)
 	for word in url.words:
-		if not word is None:
+		if word is None:
+			continue
+		else:
 			wbX = timeCheck("wb", 1)
 			wb = WordBook.query.filter_by(user_id=user.id, word_id=word.id).first()
 			wbY = timeCheck("wb", 2)
@@ -127,6 +129,7 @@ def select_word_for_web(email, link):
 					deleted_word_list.append(words)
 				else:
 					word_list.append(words)
+			
 	forY = timeCheck("분기문 종료", 2)	
 	print("반복문 수행 시간 : " + str(forY-forX))
 	print(forY-forX)
