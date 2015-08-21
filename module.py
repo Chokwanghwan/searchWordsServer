@@ -192,6 +192,15 @@ def find_all_words():
 		all_words_list.append(word)
 	return json.dumps(all_words_list)
 
+def test_data_for_haffle_newsfeed():
+	food_article = []
+	for i in range(30):
+		food_article.append({'title': '맛있는 타이틀'+str(i), 'creatingTime': '3분전', 'content': '컨텐츠'+str(i)+' 맛있는 '+str(i)+'번째 집','smileCount': str(i),'hashTag': '족발'+str(i)})
+	return food_article	
+
+
+
+
 
 
 

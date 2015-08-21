@@ -107,6 +107,11 @@ def get_all_words():
 
 	return data
 
+@app.route('/testDataForHaffle', methods=['GET'])	
+@crossdomain(origin='*') # allow all origins all methods.
+def haffle_newsfeed_test_data():
+	data = test_data_for_haffle_newsfeed()
+	return data
 
 if __name__ == '__main__':
 	handler = RotatingFileHandler('myWord_log_1.log', maxBytes=10000, backupCount=1)
