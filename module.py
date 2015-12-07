@@ -157,7 +157,7 @@ def select_word_for_mobile(email):
 	# lapse = current - old
 	# app.logger.info("laps = %s", lapse.__str__())
 	# app.logger.info("mobile select word len = %d", len(word_list))
-	word_list = words_list_sorted(word_list)
+	# word_list = words_list_sorted(word_list)
 	word_list = json.dumps(word_list)
 	return word_list
 
@@ -173,7 +173,7 @@ def select_delete_word_for_mobile(email):
 		# words = {'english': english, 'mean': mean, 'urls':len(wb.refer_urls.all())}
 		words = {'english': english, 'mean': mean}
 		deleted_word_list.append(words)
-	word_list = words_list_sorted(deleted_word_list)
+	# word_list = words_list_sorted(deleted_word_list)
 	deleted_word_list = json.dumps(deleted_word_list)
 	return deleted_word_list
 
