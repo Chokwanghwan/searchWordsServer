@@ -149,7 +149,8 @@ def select_word_for_mobile(email):
 		w = Word.query.filter_by(id=wb.word_id).first()
 		english = w.english
 		mean = w.mean
-		words = {'english': english, 'mean': mean, 'urls':len(wb.refer_urls.all())}
+		# words = {'english': english, 'mean': mean, 'urls':len(wb.refer_urls.all())}
+		words = {'english': english, 'mean': mean}
 		word_list.append(words)
 	
 	current = datetime.now()
@@ -196,12 +197,7 @@ def test_data_for_haffle_newsfeed():
 	food_article = []
 	for i in range(30):
 		food_article.append({'title': '맛있는 타이틀'+str(i), 'creatingTime': '3분전', 'content': '컨텐츠'+str(i)+' 맛있는 '+str(i)+'번째 집','smileCount': str(i),'hashTag': '족발'+str(i)})
-	return json.dumps(food_article)	
-
-
-
-
-
+	return json.dumps(food_article)
 
 
 

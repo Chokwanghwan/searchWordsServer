@@ -4,7 +4,6 @@ import os, logging
 from module import *
 from decorator import *
 
-
 from logging.handlers import RotatingFileHandler
 
 @app.route('/', methods=['GET'])
