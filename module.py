@@ -144,7 +144,7 @@ def select_word_for_mobile(email):
 	user = User.get(email)
 	word_list = []
 	app.logger.info("mobile select user = %s", email)
-	old = datetime.now()
+	# old = datetime.now()
 	for wb in user.word_books.filter_by(is_deleted=False).all():
 		w = Word.query.filter_by(id=wb.word_id).first()
 		english = w.english
@@ -153,8 +153,8 @@ def select_word_for_mobile(email):
 		words = {'english': english, 'mean': mean}
 		word_list.append(words)
 	
-	current = datetime.now()
-	lapse = current - old
+	# current = datetime.now()
+	# lapse = current - old
 	# app.logger.info("laps = %s", lapse.__str__())
 	# app.logger.info("mobile select word len = %d", len(word_list))
 	word_list = words_list_sorted(word_list)
